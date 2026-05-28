@@ -1545,76 +1545,84 @@ async function enviarEmailAdmin(){
   try{
     const datas=gerarDatas();
     const sec=document.getElementById('b2sec').value;
-    const ON_local={lavanda:'Lavanda',alecrim:'Alecrim',hortela:'Hortelã-pimenta',laranja:'Laranja doce',geranio:'Gerânio'};
-    const FAM={adocicado:'Oriental Gourmand',madeira:'Amadeirado Nobre',citrico:'Cítrico Aromático',floral:'Floral Abstrato Moderno'};
-    const MSG={poder:'Poder e Respeito',empatia:'Acessibilidade e Empatia',energia:'Energia e Criatividade',misterio:'Mistério e Sedução'};
+    const ON_local={lavanda:'Lavanda',alecrim:'Alecrim',hortela:'Hortela-pimenta',laranja:'Laranja doce',geranio:'Geranio'};
+    const FAM={adocicado:'Oriental Gourmand',madeira:'Amadeirado Nobre',citrico:'Citrico Aromatico',floral:'Floral Abstrato Moderno'};
+    const MSG={poder:'Poder e Respeito',empatia:'Acessibilidade e Empatia',energia:'Energia e Criatividade',misterio:'Misterio e Seducao'};
     const INT={discreta:'Eau de Cologne',moderada:'Eau de Toilette',intensa:'Eau de Parfum'};
-    const PEL={seca:'Seca',oleosa:'Oleosa',normal:'Normal',sensivel:'Ultra sensível'};
-    const OCA={trabalho:'Trabalho / reuniões',diario:'Dia a dia versátil',social:'Encontros e eventos',curinga:'Curinga'};
-    const algTxt=E.alergias.includes('nenhuma')?'Nenhuma declarada':E.alergias.join(', ');
+    const PEL={seca:'Seca',oleosa:'Oleosa',normal:'Normal',sensivel:'Ultra sensivel'};
+    const OCA={trabalho:'Trabalho',diario:'Dia a dia',social:'Encontros',curinga:'Curinga'};
+    const algTxt=E.alergias.includes('nenhuma')?'Nenhuma':E.alergias.join(', ');
     const vetoTxt=E.vetos.includes('nenhum')?'Nenhuma':E.vetos.join(', ');
     const f=calcGaloes(E.b1,E.vetos,E.pele);
     const v1=calcVar(E.b1,E.vetos,E.pele,'v1');
     const v2=calcVar(E.b1,E.vetos,E.pele,'v2');
     const v3=calcVar(E.b1,E.vetos,E.pele,'v3');
-    function ml5(v){return v===0?'—':(v/10).toFixed(1)+'ml';}
-    function ml50(v){return v===0?'—':v+'ml';}
+    function m5(v){return v===0?'0':(v/10).toFixed(1)+'ml';}
+    function m50(v){return v===0?'0':v+'ml';}
+    const tabela=
+      'Base adocicada: V1='+m5(v1.adocicado)+'/'+m50(v1.adocicado)+' V2='+m5(v2.adocicado)+'/'+m50(v2.adocicado)+' V3='+m5(v3.adocicado)+'/'+m50(v3.adocicado)+'\n'+
+      'Base amadeirada: V1='+m5(v1.madeira)+'/'+m50(v1.madeira)+' V2='+m5(v2.madeira)+'/'+m50(v2.madeira)+' V3='+m5(v3.madeira)+'/'+m50(v3.madeira)+'\n'+
+      'Base citrica: V1='+m5(v1.citrico)+'/'+m50(v1.citrico)+' V2='+m5(v2.citrico)+'/'+m50(v2.citrico)+' V3='+m5(v3.citrico)+'/'+m50(v3.citrico)+'\n'+
+      'Base floral: V1='+m5(v1.floral)+'/'+m50(v1.floral)+' V2='+m5(v2.floral)+'/'+m50(v2.floral)+' V3='+m5(v3.floral)+'/'+m50(v3.floral)+'\n'+
+      'Vitamina E: 0.3ml/3ml\n'+
+      'Fixador: '+(f._fix>0?'0.4ml/4ml':'nao necessario')+'\n'+
+      'Alcool: V1='+m5(v1._v)+'/'+m50(v1._v)+' V2='+m5(v2._v)+'/'+m50(v2._v)+' V3='+m5(v3._v)+'/'+m50(v3._v)+'\n'+
+      'Oleo principal: 1 gota/8 gotas\n'+
+      'Oleo secundario: '+(sec&&sec!==E.b2?'1 gota/4 gotas':'nao selecionado');
     const params={
       nome_cliente:E.nome,
-      idade:E.idade+' anos',
+      email_cliente:E.email_cliente||'nao informado',
+      whatsapp_cliente:E.whatsapp||'nao informado',
+      idade:E.idade,
       ocasiao:OCA[E.ocasiao]||E.ocasiao,
-      nome_perfume:'"'+E.nomePerfume+'"',
+      nome_perfume:E.nomePerfume,
       alergias:algTxt,
-      referencias:document.getElementById('ref').value||'Não informado',
+      referencias:document.getElementById('ref').value||'nao informado',
       familia:FAM[E.b1],
       mensagem:MSG[E.b1b],
       oleo_principal:ON_local[E.b2]||E.b2,
-      oleo_secundario:sec&&sec!==E.b2?ON_local[sec]||sec:'Não selecionado',
+      oleo_secundario:sec&&sec!==E.b2?ON_local[sec]||sec:'nao selecionado',
       restricoes:vetoTxt,
       intensidade:INT[E.b4],
       pele:PEL[E.pele],
-      maceracao:'Galões: '+({adocicado:15,madeira:15,citrico:7,floral:10}[E.b1]||15)+' dias · Frasco final: 2 a 3 dias',
-      maceracao_final:'2 a 3 dias',
       num_pedido:datas.num,
       status:'Aguardando pagamento',
-      data_pedido:datas.fmtPedido,
-      data_envio_previsto:datas.fmtEnvio,
-      data_entrega_prevista:datas.fmtEntrega,
-      data_validade_amostras:datas.fmtValidade,
-      data_fim_frasco_5ml:datas.fmtFimFrasco5,
-      // Variações
-      v1_adocicado_5:ml5(v1.adocicado),v1_adocicado_50:ml50(v1.adocicado),
-      v2_adocicado_5:ml5(v2.adocicado),v2_adocicado_50:ml50(v2.adocicado),
-      v3_adocicado_5:ml5(v3.adocicado),v3_adocicado_50:ml50(v3.adocicado),
-      v1_madeira_5:ml5(v1.madeira),v1_madeira_50:ml50(v1.madeira),
-      v2_madeira_5:ml5(v2.madeira),v2_madeira_50:ml50(v2.madeira),
-      v3_madeira_5:ml5(v3.madeira),v3_madeira_50:ml50(v3.madeira),
-      v1_citrico_5:ml5(v1.citrico),v1_citrico_50:ml50(v1.citrico),
-      v2_citrico_5:ml5(v2.citrico),v2_citrico_50:ml50(v2.citrico),
-      v3_citrico_5:ml5(v3.citrico),v3_citrico_50:ml50(v3.citrico),
-      v1_floral_5:ml5(v1.floral),v1_floral_50:ml50(v1.floral),
-      v2_floral_5:ml5(v2.floral),v2_floral_50:ml50(v2.floral),
-      v3_floral_5:ml5(v3.floral),v3_floral_50:ml50(v3.floral),
-      fixador_5:f._fix>0?'0.4ml':'—',fixador_50:f._fix>0?'4ml':'—',
-      v1_alcool_5:ml5(v1._v),v1_alcool_50:ml50(v1._v),
-      v2_alcool_5:ml5(v2._v),v2_alcool_50:ml50(v2._v),
-      v3_alcool_5:ml5(v3._v),v3_alcool_50:ml50(v3._v),
-      oleo2_5:sec&&sec!==E.b2?'1 gota':'—',
-      oleo2_50:sec&&sec!==E.b2?'4 gotas':'—',
-      volumes_galoes:'Adocicado: '+f.adocicado+'ml · Amadeirado: '+f.madeira+'ml · Cítrico: '+f.citrico+'ml · Floral: '+f.floral+'ml',
-      passo_fixador:f._fix>0?'Adicionar 4ml musgo branco/ambroxan — pele seca requer fixação reforçada.':'Não necessário para este perfil.',
-      passo_alcool:f._v+'ml de álcool perfumístico 96%',
-      passo_oleos:(ON_local[E.b2]||E.b2)+' — 8 gotas'+(sec&&sec!==E.b2?', '+(ON_local[sec]||sec)+' — 4 gotas':'')+'. Óleos sempre frescos, último ingrediente.',
-      alerta_producao:E.pele==='sensivel'?'ATENÇÃO: pele ultra sensível — usar apenas óleos essenciais certificados para pele sensível.':E.alergias.includes('nenhuma')?'Sem alertas especiais.':'Verificar alergias: '+algTxt,
-      // Custos estimados
-      custo_insumos:'R$ — (preencher com valores reais)',
-      custo_frete:'R$ — (calcular no envio)',
-      custo_embalagem:'R$ — (frasco + rótulo + caixa)',
-      margem_sugerida:'R$ 60,00 (kit amostras)',
-      name:'Crispian Parfum',
-      email:E.email_cliente||'atendimento@crispianparfum.com.br',
-      email_cliente:E.email_cliente||'Nao informado',
-      whatsapp_cliente:E.whatsapp||'Nao informado',
+      data_pedido:datas.fmtPedidoS,
+      data_envio_previsto:datas.fmtPedidoS,
+      data_entrega_prevista:datas.fmtPedidoS,
+      data_validade_amostras:datas.fmtPedidoS,
+      data_fim_frasco_5ml:datas.fmtPedidoS,
+      maceracao:({adocicado:'15',madeira:'15',citrico:'7',floral:'10'}[E.b1]||'15')+' dias',
+      maceracao_final:'2 a 3 dias',
+      volumes_galoes:'Adoc:'+f.adocicado+'ml Mad:'+f.madeira+'ml Cit:'+f.citrico+'ml Flo:'+f.floral+'ml',
+      tabela_formula:tabela,
+      fixador_5:f._fix>0?'0.4ml':'nao',
+      fixador_50:f._fix>0?'4ml':'nao',
+      passo_fixador:f._fix>0?'4ml musgo branco':'nao necessario',
+      passo_alcool:f._v+'ml alcool 96%',
+      passo_oleos:(ON_local[E.b2]||E.b2)+' 8 gotas'+(sec&&sec!==E.b2?', '+(ON_local[sec]||sec)+' 4 gotas':''),
+      alerta_producao:E.alergias.includes('nenhuma')?'Sem alertas':'Alergias: '+algTxt,
+      custo_insumos:'preencher',
+      custo_frete:'calcular no envio',
+      custo_embalagem:'preencher',
+      margem_sugerida:'R$ 60,00',
+      v1_adocicado_5:m5(v1.adocicado),v1_adocicado_50:m50(v1.adocicado),
+      v2_adocicado_5:m5(v2.adocicado),v2_adocicado_50:m50(v2.adocicado),
+      v3_adocicado_5:m5(v3.adocicado),v3_adocicado_50:m50(v3.adocicado),
+      v1_madeira_5:m5(v1.madeira),v1_madeira_50:m50(v1.madeira),
+      v2_madeira_5:m5(v2.madeira),v2_madeira_50:m50(v2.madeira),
+      v3_madeira_5:m5(v3.madeira),v3_madeira_50:m50(v3.madeira),
+      v1_citrico_5:m5(v1.citrico),v1_citrico_50:m50(v1.citrico),
+      v2_citrico_5:m5(v2.citrico),v2_citrico_50:m50(v2.citrico),
+      v3_citrico_5:m5(v3.citrico),v3_citrico_50:m50(v3.citrico),
+      v1_floral_5:m5(v1.floral),v1_floral_50:m50(v1.floral),
+      v2_floral_5:m5(v2.floral),v2_floral_50:m50(v2.floral),
+      v3_floral_5:m5(v3.floral),v3_floral_50:m50(v3.floral),
+      v1_alcool_5:m5(v1._v),v1_alcool_50:m50(v1._v),
+      v2_alcool_5:m5(v2._v),v2_alcool_50:m50(v2._v),
+      v3_alcool_5:m5(v3._v),v3_alcool_50:m50(v3._v),
+      oleo2_5:sec&&sec!==E.b2?'1 gota':'nao',
+      oleo2_50:sec&&sec!==E.b2?'4 gotas':'nao',
     };
     await emailjs.send('service_es09yqa','gwpn6ve',params,'ApO31SOiNuaPfSWs2');
     console.log('E-mail enviado com sucesso');
