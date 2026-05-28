@@ -532,6 +532,100 @@ table.variacoes td.center { text-align:center; }
   cursor: pointer; margin-top: .5rem;
 }
 
+/* ── STORY TEMPLATE ── */
+.story-section {
+  margin: 1rem 0;
+  background: var(--creme);
+  border: 0.5px solid rgba(44,31,20,.1);
+  padding: 1.5rem;
+}
+.story-section h4 {
+  font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: .5rem;
+}
+.story-section .story-desc {
+  font-size: .85rem; color: var(--marrom-medio); margin-bottom: 1.25rem; line-height: 1.7;
+}
+.story-preview-wrap {
+  display: flex; justify-content: center; margin-bottom: 1.25rem;
+}
+.story-frame {
+  width: 240px; height: 426px; border-radius: 12px; overflow: hidden;
+  position: relative; flex-shrink: 0;
+  box-shadow: 0 8px 32px rgba(44,31,20,.15);
+}
+.story-canvas {
+  width: 100%; height: 100%; position: relative;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between;
+  padding: 1.75rem 1.25rem;
+}
+
+/* paletas claras por família */
+.sc-adocicado { background: linear-gradient(160deg,#FDF4E3 0%,#F5E6C8 50%,#EDD8AA 100%); }
+.sc-madeira   { background: linear-gradient(160deg,#F0EBE0 0%,#E5DDD0 50%,#D8CDB8 100%); }
+.sc-citrico   { background: linear-gradient(160deg,#EEF4F0 0%,#DDF0E6 50%,#C8E8D8 100%); }
+.sc-floral    { background: linear-gradient(160deg,#F8EEF2 0%,#F0DDE6 50%,#E8C8D5 100%); }
+
+/* acentos por família */
+.sc-adocicado .s-accent { color: #8B5A10; }
+.sc-madeira   .s-accent { color: #3D3528; }
+.sc-citrico   .s-accent { color: #0F4A35; }
+.sc-floral    .s-accent { color: #6B2040; }
+
+.sc-adocicado .s-tag  { border-color: rgba(139,90,16,.3); color: #8B5A10; background: rgba(139,90,16,.06); }
+.sc-madeira   .s-tag  { border-color: rgba(61,53,40,.25); color: #3D3528; background: rgba(61,53,40,.05); }
+.sc-citrico   .s-tag  { border-color: rgba(15,74,53,.25); color: #0F4A35; background: rgba(15,74,53,.05); }
+.sc-floral    .s-tag  { border-color: rgba(107,32,64,.25); color: #6B2040; background: rgba(107,32,64,.05); }
+
+.sc-adocicado .s-divisor { background: rgba(139,90,16,.35); }
+.sc-madeira   .s-divisor { background: rgba(61,53,40,.3);   }
+.sc-citrico   .s-divisor { background: rgba(15,74,53,.3);   }
+.sc-floral    .s-divisor { background: rgba(107,32,64,.3);  }
+
+.sc-adocicado .s-deco { border-color: rgba(139,90,16,.12); }
+.sc-madeira   .s-deco { border-color: rgba(61,53,40,.1);   }
+.sc-citrico   .s-deco { border-color: rgba(15,74,53,.1);   }
+.sc-floral    .s-deco { border-color: rgba(107,32,64,.1);  }
+
+.sc-adocicado .s-link { color: rgba(139,90,16,.6); }
+.sc-madeira   .s-link { color: rgba(61,53,40,.5);  }
+.sc-citrico   .s-link { color: rgba(15,74,53,.5);  }
+.sc-floral    .s-link { color: rgba(107,32,64,.5); }
+
+.sc-adocicado .s-cta,.sc-madeira .s-cta,.sc-citrico .s-cta,.sc-floral .s-cta {
+  color: rgba(44,31,20,.35);
+}
+.sc-adocicado .s-citacao,.sc-madeira .s-citacao,.sc-citrico .s-citacao,.sc-floral .s-citacao {
+  color: rgba(44,31,20,.45); border-left-color: rgba(44,31,20,.15);
+}
+
+/* elementos do story */
+.s-deco-ring {
+  position: absolute; border-radius: 50%; pointer-events: none;
+}
+.s-top { display: flex; flex-direction: column; align-items: center; gap: 5px; position: relative; z-index: 2; }
+.s-marca { font-family: var(--serif); font-size: .7rem; font-weight: 300; letter-spacing: .3em; text-transform: uppercase; }
+.s-linha { width: 32px; height: 0.5px; background: rgba(44,31,20,.2); }
+.s-centro { display: flex; flex-direction: column; align-items: center; gap: .65rem; position: relative; z-index: 2; text-align: center; }
+.s-tag { font-size: .52rem; letter-spacing: .18em; text-transform: uppercase; padding: .22rem .75rem; border-radius: 20px; border: 0.5px solid; }
+.s-nome { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; font-style: italic; line-height: 1.1; color: var(--marrom); word-break: break-word; max-width: 180px; }
+.s-divisor { width: 24px; height: 0.5px; }
+.s-perfil { font-family: var(--serif); font-size: .85rem; font-weight: 400; color: var(--marrom); }
+.s-familia { font-size: .52rem; letter-spacing: .15em; text-transform: uppercase; color: var(--marrom-medio); opacity: .6; }
+.s-citacao { font-family: var(--serif); font-size: .7rem; font-style: italic; font-weight: 300; line-height: 1.6; max-width: 160px; border-left: 1px solid; padding-left: .6rem; text-align: left; }
+.s-bottom { display: flex; flex-direction: column; align-items: center; gap: 5px; position: relative; z-index: 2; }
+.s-cta { font-size: .5rem; letter-spacing: .15em; text-transform: uppercase; }
+.s-link { font-size: .58rem; letter-spacing: .06em; }
+
+/* botão salvar story */
+.btn-story {
+  width: 100%; padding: .85rem; background: var(--marrom); color: var(--creme);
+  font-family: var(--sans); font-size: .75rem; letter-spacing: .14em;
+  text-transform: uppercase; border: none; cursor: pointer; transition: background .2s;
+}
+.btn-story:hover { background: var(--amber); }
+
 /* ── RODAPÉ ── */
 footer {
   background: var(--marrom); color: rgba(250,247,242,.6);
@@ -946,6 +1040,38 @@ footer {
         <p style="font-size:.82rem;color:var(--marrom-medio);margin-top:.75rem;line-height:1.7;">Este nome estará gravado no rótulo do seu frasco exclusivo. É a sua assinatura — criada por você, para você.</p>
       </div>
       <div class="cli-prox"><h4>O que acontece agora</h4><p id="cli-prox"></p></div>
+
+      <!-- STORY TEMPLATE -->
+      <div class="story-section">
+        <h4>Seu Story personalizado</h4>
+        <p class="story-desc">Compartilhe sua criação no Instagram. O template já está pronto com o seu perfil — salve a imagem e poste nos Stories.</p>
+        <div class="story-preview-wrap">
+          <div class="story-frame">
+            <div class="story-canvas sc-adocicado" id="story-canvas">
+              <div class="s-deco-ring" id="s-ring-1" style="width:200px;height:200px;top:-40px;right:-60px;border:1px solid;opacity:.15;"></div>
+              <div class="s-deco-ring" id="s-ring-2" style="width:150px;height:150px;top:-20px;right:-40px;border:1px solid;opacity:.08;"></div>
+              <div class="s-top">
+                <span class="s-marca s-accent">Crispian</span>
+                <div class="s-linha"></div>
+              </div>
+              <div class="s-centro">
+                <span class="s-tag" id="s-tag">Oriental Gourmand</span>
+                <div class="s-nome" id="s-nome">"Ventania"</div>
+                <div class="s-divisor s-divisor"></div>
+                <div class="s-perfil s-accent" id="s-perfil">Âmbar Dourado</div>
+                <div class="s-familia" id="s-familia">Acolhimento Profundo</div>
+                <div class="s-citacao" id="s-citacao">Criação exclusiva formulada para a minha essência.</div>
+              </div>
+              <div class="s-bottom">
+                <span class="s-cta">Descubra a sua criação</span>
+                <span class="s-link s-link">tattianabrito-crispian.github.io/crispian/crispian.html</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-story" onclick="salvarStory()">Salvar imagem do Story</button>
+      </div>
+
       <button class="btn-admin" onclick="verAdmin()">Acesso administradora — ficha técnica de produção</button>
     </div>
 
@@ -1159,6 +1285,7 @@ Separe os 4 textos APENAS com "---" em uma linha isolada. Nenhum outro separador
     esconderLoading();
     document.getElementById('tela-cliente').style.display='block';
     document.getElementById('tela-cliente').scrollIntoView({behavior:'smooth'});
+    atualizarStory(E.b1, E.b1b, E.nomePerfume, PNOMES[E.b1][E.b1b]);
   } catch(err){
     esconderLoading();
     document.getElementById('tela-form').style.display='block';
@@ -1299,10 +1426,48 @@ Separe os 4 textos APENAS com "---" em uma linha isolada. Nenhum outro separador
 function verAdmin(){document.getElementById('tela-cliente').style.display='none';document.getElementById('tela-admin').style.display='block';document.getElementById('tela-admin').scrollIntoView({behavior:'smooth'});}
 function voltarCliente(){document.getElementById('tela-admin').style.display='none';document.getElementById('tela-cliente').style.display='block';document.getElementById('tela-cliente').scrollIntoView({behavior:'smooth'});}
 
+const STORY_TEMAS={
+  adocicado:{cls:'sc-adocicado',tag:'Oriental Gourmand'},
+  madeira:{cls:'sc-madeira',tag:'Amadeirado Nobre'},
+  citrico:{cls:'sc-citrico',tag:'Cítrico Aromático'},
+  floral:{cls:'sc-floral',tag:'Floral Abstrato Moderno'}
+};
+const STORY_CITACOES={
+  poder:'Uma criação que projeta liderança e sofisticação.',
+  empatia:'Uma criação que acolhe antes mesmo das palavras.',
+  energia:'Uma criação que desperta e inspira a cada uso.',
+  misterio:'Uma criação que fica no ar muito depois de eu sair.'
+};
+
+function atualizarStory(galao, mensagem, nomePerfume, nomePerfil){
+  const t=STORY_TEMAS[galao]||STORY_TEMAS.adocicado;
+  const canvas=document.getElementById('story-canvas');
+  canvas.className='story-canvas '+t.cls;
+  document.getElementById('s-ring-1').className='s-deco-ring s-deco';
+  document.getElementById('s-ring-2').className='s-deco-ring s-deco';
+  document.getElementById('s-tag').textContent=t.tag;
+  document.getElementById('s-nome').textContent='"'+(nomePerfume||'Minha Criação')+'"';
+  document.getElementById('s-perfil').textContent=nomePerfil||'Perfil Olfativo';
+  document.getElementById('s-familia').textContent={poder:'Poder e Respeito',empatia:'Acessibilidade e Empatia',energia:'Energia e Criatividade',misterio:'Mistério e Sedução'}[mensagem]||'';
+  document.getElementById('s-citacao').textContent=STORY_CITACOES[mensagem]||'Criação exclusiva formulada para a minha essência.';
+}
+
+function salvarStory(){
+  const el=document.getElementById('story-canvas');
+  if(typeof html2canvas==='undefined'){alert('Aguarde o carregamento e tente novamente.');return;}
+  html2canvas(el,{scale:3,useCORS:true,backgroundColor:null}).then(c=>{
+    const a=document.createElement('a');
+    a.download='crispian-story.png';
+    a.href=c.toDataURL('image/png');
+    a.click();
+  });
+}
+
 // Reveal on scroll
 const reveals=document.querySelectorAll('.reveal');
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
 reveals.forEach(r=>obs.observe(r));
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
