@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crispian — Criação Olfativa Personalizada</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --areia: #F5F0E8;
+  --areia-escura: #EDE5D6;
+  --marrom: #2C1F14;
+  --marrom-medio: #5C3D2A;
+  --amber: #A0702A;
+  --amber-claro: #C9943A;
+  --musgo: #4A5240;
+  --musgo-claro: #7A8A6A;
+  --creme: #FAF7F2;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Jost', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--creme);
+  color: var(--marrom);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── NAVEGAÇÃO ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(250,247,242,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid rgba(44,31,20,0.1);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  color: var(--marrom);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--marrom-medio); text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--amber); }
+.nav-cta {
+  font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
+  padding: .6rem 1.4rem; border: 1px solid var(--amber);
+  color: var(--amber); background: transparent; cursor: pointer;
+  font-family: var(--sans); font-weight: 400; transition: all .2s;
+  text-decoration: none;
+}
+.nav-cta:hover { background: var(--amber); color: var(--creme); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 7rem 3rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; right: -80px; top: -80px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(160,112,42,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; left: 20%; bottom: 10%;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,82,64,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-text { max-width: 560px; }
+.hero-tag {
+  font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1.5rem; display: block;
+  opacity: 0; animation: fadeUp .8s .2s forwards;
+}
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-weight: 300; line-height: 1.1; margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp .8s .4s forwards;
+}
+.hero h1 em { font-style: italic; color: var(--amber-claro); }
+.hero-desc {
+  font-size: 1rem; color: var(--marrom-medio); max-width: 460px;
+  margin-bottom: 2.5rem; line-height: 1.8;
+  opacity: 0; animation: fadeUp .8s .6s forwards;
+}
+.hero-btns {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .8s .8s forwards;
+}
+.btn-primary {
+  padding: .85rem 2rem; background: var(--marrom); color: var(--creme);
+  font-family: var(--sans); font-size: .78rem; letter-spacing: .12em;
+  text-transform: uppercase; border: none; cursor: pointer; transition: all .25s;
+  text-decoration: none; display: inline-block;
+}
+.btn-primary:hover { background: var(--amber); }
+.btn-outline {
+  padding: .85rem 2rem; background: transparent; color: var(--marrom);
+  font-family: var(--sans); font-size: .78rem; letter-spacing: .12em;
+  text-transform: uppercase; border: 1px solid var(--marrom); cursor: pointer;
+  transition: all .25s; text-decoration: none; display: inline-block;
+}
+.btn-outline:hover { background: var(--areia-escura); }
+.hero-visual {
+  display: flex; justify-content: center; align-items: center;
+  opacity: 0; animation: fadeIn 1.2s .6s forwards;
+}
+.frasco-wrap {
+  position: relative; width: 280px; height: 400px;
+}
+.frasco-circulo {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 320px; height: 320px; border-radius: 50%;
+  border: 1px solid rgba(160,112,42,0.15);
+}
+.frasco-circulo:nth-child(2) { width: 260px; height: 260px; border-color: rgba(160,112,42,0.2); animation: pulsar 4s ease-in-out infinite; }
+.frasco-circulo:nth-child(3) { width: 200px; height: 200px; border-color: rgba(160,112,42,0.3); animation: pulsar 4s ease-in-out 1s infinite; }
+.frasco-svg {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 120px;
+}
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--marrom-medio); display: flex; flex-direction: column;
+  align-items: center; gap: .5rem;
+  opacity: 0; animation: fadeUp .8s 1.2s forwards;
+}
+.scroll-line {
+  width: 1px; height: 40px; background: var(--amber);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+
+/* ── MANIFESTO ── */
+.manifesto {
+  padding: 6rem 3rem;
+  background: var(--marrom);
+  color: var(--creme);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.manifesto::before {
+  content: '"';
+  font-family: var(--serif); font-size: 20rem;
+  position: absolute; top: -4rem; left: 3rem;
+  color: rgba(255,255,255,0.03); line-height: 1;
+  pointer-events: none;
+}
+.manifesto blockquote {
+  font-family: var(--serif); font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 300; font-style: italic; line-height: 1.6;
+  max-width: 780px; margin: 0 auto 1.5rem;
+}
+.manifesto cite {
+  font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--amber-claro); font-style: normal;
+}
+
+/* ── CONCEITO ── */
+.conceito {
+  padding: 7rem 3rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.conceito-header { margin-bottom: 4rem; }
+.section-tag {
+  font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1rem; display: block;
+}
+.conceito-header h2 {
+  font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300; line-height: 1.2; max-width: 600px;
+}
+.conceito-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px; background: rgba(44,31,20,0.08);
+}
+.conceito-item {
+  background: var(--creme); padding: 2.5rem 2rem;
+  transition: background .3s;
+}
+.conceito-item:hover { background: var(--areia); }
+.conceito-num {
+  font-family: var(--serif); font-size: 3rem; font-weight: 300;
+  color: rgba(160,112,42,0.25); line-height: 1; margin-bottom: 1.5rem;
+}
+.conceito-item h3 {
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 400;
+  margin-bottom: .75rem; color: var(--marrom);
+}
+.conceito-item p {
+  font-size: .9rem; color: var(--marrom-medio); line-height: 1.8;
+}
+
+/* ── COMO FUNCIONA ── */
+.como {
+  padding: 7rem 3rem;
+  background: var(--areia);
+}
+.como-inner { max-width: 1100px; margin: 0 auto; }
+.como-header { margin-bottom: 4rem; }
+.como-header h2 {
+  font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300; line-height: 1.2;
+}
+.como-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; position: relative;
+}
+.como-steps::before {
+  content: '';
+  position: absolute; top: 2.5rem; left: 2rem; right: 2rem; height: 1px;
+  background: var(--amber); opacity: .3;
+}
+.como-step { padding: 0 1.5rem 0 0; padding-top: 5rem; position: relative; }
+.step-num {
+  position: absolute; top: 0; left: 0;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--marrom); color: var(--creme);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 1.1rem; font-weight: 300;
+}
+.como-step h3 {
+  font-family: var(--serif); font-size: 1.2rem; font-weight: 400;
+  margin-bottom: .5rem;
+}
+.como-step p { font-size: .88rem; color: var(--marrom-medio); line-height: 1.8; }
+
+/* ── FAMÍLIAS ── */
+.familias {
+  padding: 7rem 3rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.familias h2 {
+  font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300; line-height: 1.2; margin-bottom: 3rem;
+}
+.familias-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; background: rgba(44,31,20,0.08);
+}
+.familia-card {
+  padding: 2.5rem; position: relative; overflow: hidden;
+  cursor: pointer; transition: all .3s;
+}
+.familia-adocicado { background: #FDF4E3; }
+.familia-madeira { background: #F0EBE0; }
+.familia-citrico { background: #EEF4F0; }
+.familia-floral { background: #F8EEF2; }
+.familia-card:hover { transform: scale(1.01); z-index: 1; }
+.familia-icon {
+  font-family: var(--serif); font-size: 4rem; line-height: 1;
+  margin-bottom: 1rem; opacity: .6;
+}
+.familia-card h3 {
+  font-family: var(--serif); font-size: 1.6rem; font-weight: 400;
+  margin-bottom: .5rem;
+}
+.familia-card .familia-sub {
+  font-size: .75rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--marrom-medio); margin-bottom: 1rem;
+}
+.familia-card p { font-size: .88rem; color: var(--marrom-medio); line-height: 1.8; }
+.familia-essencias {
+  margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .4rem;
+}
+.essencia-pill {
+  font-size: .7rem; padding: .25rem .75rem;
+  border: 1px solid rgba(44,31,20,0.2); border-radius: 20px;
+  color: var(--marrom-medio);
+}
+
+/* ── SEPARADOR ── */
+.separador {
+  padding: 5rem 3rem;
+  background: var(--marrom); color: var(--creme);
+  display: flex; align-items: center; justify-content: center;
+  gap: 3rem; flex-wrap: wrap; text-align: center;
+}
+.sep-item { }
+.sep-num {
+  font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
+  color: var(--amber-claro); display: block; line-height: 1;
+}
+.sep-label {
+  font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(250,247,242,0.6);
+}
+.sep-divider { width: 1px; height: 60px; background: rgba(255,255,255,.1); }
+
+/* ── QUESTIONÁRIO ── */
+.questionario-section {
+  padding: 7rem 3rem;
+  background: var(--areia);
+}
+.q-inner { max-width: 780px; margin: 0 auto; }
+.q-header { text-align: center; margin-bottom: 3rem; }
+.q-header h2 {
+  font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300; line-height: 1.2; margin-bottom: 1rem;
+}
+.q-header p { font-size: .95rem; color: var(--marrom-medio); max-width: 500px; margin: 0 auto; line-height: 1.8; }
+
+/* form styles */
+.prg { display: flex; gap: 3px; margin-bottom: 2.5rem; }
+.pd { height: 2px; flex: 1; background: rgba(44,31,20,.12); transition: background .3s; }
+.pd.done { background: var(--amber); }
+.blk {
+  background: var(--creme); border: 0.5px solid rgba(44,31,20,.1);
+  padding: 2rem; margin-bottom: 1rem;
+}
+.blk-tag {
+  font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: .75rem; display: block;
+}
+.blk h3 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  margin-bottom: .3rem;
+}
+.blk .sub { font-size: .88rem; color: var(--marrom-medio); margin-bottom: 1.25rem; line-height: 1.7; }
+.op {
+  display: flex; align-items: flex-start; gap: .85rem;
+  padding: .85rem 1rem; border: 0.5px solid rgba(44,31,20,.12);
+  margin-bottom: .5rem; cursor: pointer; transition: all .15s;
+}
+.op:hover { background: var(--areia); border-color: rgba(160,112,42,.3); }
+.op.s { border-color: var(--amber); background: rgba(160,112,42,.06); }
+.op.s .ck { border-color: var(--amber); background: var(--amber); }
+.op.sc { border-color: #8B3A2A; background: rgba(139,58,42,.05); }
+.op.sc .ck { border-color: #8B3A2A; background: #8B3A2A; }
+.ck {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 1.5px solid rgba(44,31,20,.25);
+  flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.sq { border-radius: 3px; }
+.ck svg { display: none; width: 10px; height: 10px; }
+.op.s .ck svg, .op.sc .ck svg { display: block; }
+.ot strong { font-size: .92rem; font-weight: 400; color: var(--marrom); display: block; margin-bottom: 1px; }
+.ot span { font-size: .8rem; color: var(--marrom-medio); }
+.sl { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--marrom-medio); margin: 1rem 0 .4rem; display: block; }
+input[type=text], select, textarea {
+  width: 100%; border: 0.5px solid rgba(44,31,20,.18);
+  padding: .75rem 1rem; font-size: .9rem;
+  font-family: var(--sans); font-weight: 300;
+  color: var(--marrom); background: var(--creme);
+  outline: none; transition: border-color .2s;
+}
+input[type=text]:focus, select:focus, textarea:focus { border-color: var(--amber); }
+textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.avp {
+  display: none; margin-top: .75rem; padding: .75rem 1rem;
+  background: rgba(139,58,42,.06); font-size: .82rem;
+  color: #8B3A2A; border-left: 2px solid #8B3A2A; line-height: 1.6;
+}
+.btn-enviar {
+  width: 100%; padding: 1rem 2rem;
+  background: var(--marrom); color: var(--creme);
+  font-family: var(--sans); font-size: .78rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  border: none; cursor: pointer; margin-top: 1.5rem;
+  transition: background .25s;
+}
+.btn-enviar:hover { background: var(--amber); }
+
+/* ── TELA CLIENTE ── */
+.tela-cliente { display: none; max-width: 780px; margin: 0 auto; }
+.cli-hero {
+  padding: 3.5rem 2.5rem; text-align: center; margin-bottom: 1rem;
+}
+.cli-saudacao {
+  font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 1rem; display: block; opacity: .7;
+}
+.cli-perfil-nome {
+  font-family: var(--serif); font-size: 2.8rem; font-weight: 300;
+  line-height: 1.1; margin-bottom: .5rem;
+}
+.cli-familia-tag {
+  font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; opacity: .6;
+}
+.cli-card {
+  background: var(--creme); border: 0.5px solid rgba(44,31,20,.1);
+  padding: 2rem; margin-bottom: 1rem;
+}
+.cli-card h4 {
+  font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1rem;
+}
+.cli-card p {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 300;
+  line-height: 1.85; color: var(--marrom);
+}
+.cli-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+.cli-tag {
+  font-size: .7rem; padding: .3rem .9rem;
+  border: 1px solid rgba(44,31,20,.15); color: var(--marrom-medio);
+}
+.cli-prox {
+  background: var(--marrom); color: var(--creme);
+  padding: 2rem; text-align: center; margin-bottom: 1rem;
+}
+.cli-prox h4 {
+  font-family: var(--serif); font-size: 1.2rem; font-weight: 300;
+  margin-bottom: .75rem;
+}
+.cli-prox p { font-size: .88rem; color: rgba(250,247,242,.75); line-height: 1.8; }
+.btn-admin {
+  width: 100%; padding: .75rem; border: 1px solid rgba(44,31,20,.2);
+  background: transparent; font-family: var(--sans); font-size: .72rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--marrom-medio);
+  cursor: pointer; margin-top: .5rem; transition: all .2s;
+}
+.btn-admin:hover { background: var(--areia); }
+
+/* ── TELA ADMIN ── */
+.tela-admin { display: none; max-width: 780px; margin: 0 auto; }
+.adm-hdr {
+  background: var(--marrom); color: var(--creme);
+  padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+}
+.adm-hdr h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 300; margin-bottom: 2px; }
+.adm-hdr p { font-size: .75rem; color: rgba(250,247,242,.6); }
+.fs {
+  background: var(--creme); border: 0.5px solid rgba(44,31,20,.1);
+  padding: 1.5rem; margin-bottom: .5rem;
+}
+.fst {
+  font-size: .65rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1rem;
+}
+.fr {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: .4rem 0; border-bottom: 0.5px solid rgba(44,31,20,.06);
+  font-size: .85rem;
+}
+.fr:last-child { border-bottom: none; }
+.fl { color: var(--marrom-medio); padding-right: 1rem; }
+.fv { font-weight: 400; color: var(--marrom); text-align: right; max-width: 60%; }
+.gc {
+  border: 0.5px solid rgba(44,31,20,.1); padding: .85rem 1rem;
+  margin-bottom: .5rem; display: flex; justify-content: space-between; align-items: center;
+}
+.gc-zero { opacity: .3; }
+.gc-nome { font-size: .88rem; font-weight: 400; }
+.gc-ess { font-size: .75rem; color: var(--marrom-medio); margin-top: 1px; }
+.gc-imp { font-size: .72rem; color: var(--marrom-medio); margin-top: 2px; }
+.gc-ml { font-size: 1.5rem; font-family: var(--serif); font-weight: 300; text-align: right; }
+.gc-ml span { font-size: .7rem; font-weight: 300; color: var(--marrom-medio); display: block; }
+.tot {
+  display: flex; justify-content: space-between;
+  padding: .6rem 1rem; background: var(--areia);
+  font-size: .85rem; font-weight: 400; margin-top: .25rem;
+}
+.nvit {
+  background: rgba(74,82,64,.08); padding: .75rem 1rem;
+  margin-top: .5rem; font-size: .8rem; color: var(--musgo);
+  border-left: 2px solid var(--musgo-claro); line-height: 1.6;
+}
+.nalv, .nalg {
+  background: rgba(139,58,42,.07); padding: .75rem 1rem;
+  border-left: 2px solid #8B3A2A; font-size: .8rem; color: #7A2A1A;
+  margin-top: .5rem; display: none; line-height: 1.6;
+}
+.ps {
+  display: flex; gap: .85rem; padding: .65rem 0;
+  border-bottom: 0.5px solid rgba(44,31,20,.06); font-size: .85rem;
+}
+.ps:last-child { border-bottom: none; }
+.pn {
+  width: 22px; height: 22px; min-width: 22px; border-radius: 50%;
+  background: var(--marrom); color: var(--creme);
+  font-size: .68rem; display: flex; align-items: center; justify-content: center;
+}
+.pt2 { font-weight: 400; color: var(--marrom); margin-bottom: 2px; }
+.pd2 { font-size: .8rem; color: var(--marrom-medio); line-height: 1.6; }
+.gi { font-size: .8rem; padding: .4rem 0; color: var(--marrom-medio); line-height: 1.6; border-bottom: 0.5px solid rgba(44,31,20,.06); }
+.gi:last-child { border-bottom: none; }
+.gi strong { color: var(--marrom); font-weight: 400; }
+.bveto, .balrg {
+  display: inline-block; background: rgba(139,58,42,.1); color: #7A2A1A;
+  font-size: .7rem; padding: .15rem .6rem; margin: 1px;
+}
+table.variacoes { width:100%; border-collapse:collapse; font-size:.78rem; }
+table.variacoes th {
+  background: var(--marrom); color: var(--creme);
+  padding: .5rem .75rem; text-align:left; font-weight:400;
+  font-size:.7rem; letter-spacing:.08em;
+}
+table.variacoes th.var-header {
+  background: var(--amber); text-align:center;
+}
+table.variacoes td {
+  padding: .45rem .75rem; border-bottom: 0.5px solid rgba(44,31,20,.08);
+  color: var(--marrom);
+}
+table.variacoes tr:last-child td { border-bottom:none; }
+table.variacoes tr:nth-child(even) td { background: var(--areia); }
+table.variacoes td.ingrediente { color:var(--marrom-medio); font-size:.75rem; }
+table.variacoes td.total { font-weight:500; background: rgba(160,112,42,.08) !important; }
+table.variacoes td.center { text-align:center; }
+.btn-voltar {
+  width: 100%; padding: .75rem; border: 1px solid rgba(44,31,20,.2);
+  background: transparent; font-family: var(--sans); font-size: .72rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--marrom-medio);
+  cursor: pointer; margin-top: .5rem;
+}
+
+/* ── RODAPÉ ── */
+footer {
+  background: var(--marrom); color: rgba(250,247,242,.6);
+  padding: 4rem 3rem 2rem;
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem; margin-bottom: 3rem;
+}
+.footer-logo {
+  font-family: var(--serif); font-size: 1.8rem; font-weight: 300;
+  color: var(--creme); letter-spacing: .1em; margin-bottom: .75rem;
+  display: block;
+}
+.footer-desc { font-size: .85rem; line-height: 1.8; max-width: 280px; }
+.footer-col h4 {
+  font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--amber-claro); margin-bottom: 1rem;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { font-size: .85rem; margin-bottom: .4rem; }
+.footer-bottom {
+  border-top: 0.5px solid rgba(255,255,255,.08);
+  padding-top: 1.5rem; text-align: center; font-size: .75rem;
+}
+
+/* ── ANIMAÇÕES ── */
+@keyframes girar { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulsar { 0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: .6; } 50% { transform: translate(-50%,-50%) scale(1.04); opacity: 1; } }
+@keyframes scrollLine { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+  .hero-visual { display: none; }
+  .conceito-grid, .como-steps, .familias-grid { grid-template-columns: 1fr; }
+  .separador { gap: 1.5rem; }
+  .sep-divider { display: none; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .questionario-section { padding: 4rem 1.5rem; }
+  .row2 { grid-template-columns: 1fr; }
+  .blk { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVEGAÇÃO -->
+<nav>
+  <a href="#" class="nav-logo">Crispian</a>
+  <ul class="nav-links">
+    <li><a href="#conceito">Conceito</a></li>
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#familias">Famílias</a></li>
+    <li><a href="#diagnostico">Diagnóstico</a></li>
+  </ul>
+  <a href="#diagnostico" class="nav-cta">Descobrir meu perfil</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-tag">Perfumaria personalizada · Aromaterapia · Visagismo</span>
+    <h1>O perfume que<br>ainda não <em>existe</em><br>— até você.</h1>
+    <p class="hero-desc">Na Crispian, não vendemos fragrâncias. Criamos composições únicas. Através de um diagnóstico preciso de identidade, necessidade terapêutica e comportamento olfativo, criamos o único perfume que é genuinamente seu.</p>
+    <div class="hero-btns">
+      <a href="#diagnostico" class="btn-primary">Iniciar diagnóstico</a>
+      <a href="#conceito" class="btn-outline">Entender o conceito</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="frasco-wrap">
+      <div class="frasco-circulo"></div>
+      <div class="frasco-circulo"></div>
+      <div class="frasco-circulo"></div>
+      <svg class="frasco-svg" viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="35" y="0" width="30" height="12" rx="2" fill="#A0702A" opacity=".4"/>
+        <rect x="38" y="10" width="24" height="6" rx="1" fill="#A0702A" opacity=".3"/>
+        <rect x="20" y="16" width="60" height="90" rx="8" fill="rgba(160,112,42,0.12)" stroke="#A0702A" stroke-width=".8"/>
+        <rect x="20" y="16" width="60" height="40" rx="8" fill="rgba(160,112,42,0.08)"/>
+        <text x="50" y="70" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="9" fill="#A0702A" opacity=".7">Crispian</text>
+        <line x1="30" y1="78" x2="70" y2="78" stroke="#A0702A" stroke-width=".4" opacity=".4"/>
+        <text x="50" y="90" text-anchor="middle" font-family="Jost,sans-serif" font-size="5" fill="#5C3D2A" opacity=".6" letter-spacing="2">CRIAÇÃO</text>
+        <rect x="20" y="106" width="60" height="8" rx="0" fill="rgba(160,112,42,0.06)"/>
+        <ellipse cx="50" cy="108" rx="30" ry="4" fill="rgba(160,112,42,0.06)"/>
+      </svg>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Explorar</span>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <blockquote>
+    "Não criamos perfumes.<br>Criamos extensões de quem você é."
+  </blockquote>
+  <cite>— Crispian, Laboratório de Perfumaria Personalizada</cite>
+</section>
+
+<!-- CONCEITO -->
+<section class="conceito" id="conceito">
+  <div class="conceito-header reveal">
+    <span class="section-tag">O conceito</span>
+    <h2>Três ciências.<br>Uma assinatura única.</h2>
+  </div>
+  <div class="conceito-grid">
+    <div class="conceito-item reveal">
+      <div class="conceito-num">01</div>
+      <h3>Alta Perfumaria</h3>
+      <p>Trabalhamos com bases maceradas de sândalo, baunilha de Madagascar, bergamota italiana e íris — as mesmas matérias-primas das grandes casas europeias. Não há atalhos na qualidade dos insumos.</p>
+    </div>
+    <div class="conceito-item reveal">
+      <div class="conceito-num">02</div>
+      <h3>Aromaterapia Clínica</h3>
+      <p>Óleos essenciais puros com propriedades terapêuticas comprovadas são integrados à sua fórmula com base na sua necessidade emocional real — ansiedade, foco, energia ou equilíbrio.</p>
+    </div>
+    <div class="conceito-item reveal">
+      <div class="conceito-num">03</div>
+      <h3>Visagismo Olfativo</h3>
+      <p>Sua identidade visual, sua linguagem corporal e a mensagem que você quer projetar ao mundo determinam a família olfativa e a intensidade da sua fórmula. O perfume como extensão da sua imagem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como" id="como-funciona">
+  <div class="como-inner">
+    <div class="como-header reveal">
+      <span class="section-tag">O processo</span>
+      <h2>Do diagnóstico<br>ao frasco exclusivo.</h2>
+    </div>
+    <div class="como-steps">
+      <div class="como-step reveal">
+        <div class="step-num">1</div>
+        <h3>Diagnóstico</h3>
+        <p>Você responde nosso questionário de perfil olfativo — identidade, necessidade terapêutica, restrições e comportamento da pele.</p>
+      </div>
+      <div class="como-step reveal">
+        <div class="step-num">2</div>
+        <h3>Criação</h3>
+        <p>Nossa inteligência cruza suas respostas e calcula a fórmula personalizada entre quatro famílias olfativas e cinco óleos terapêuticos.</p>
+      </div>
+      <div class="como-step reveal">
+        <div class="step-num">3</div>
+        <h3>Três amostras</h3>
+        <p>Você recebe um kit com três pequenas variações da sua fórmula para sentir e escolher a que mais ressoa com você.</p>
+      </div>
+      <div class="como-step reveal">
+        <div class="step-num">4</div>
+        <h3>Seu frasco</h3>
+        <p>Após sua escolha, produzimos artesanalmente seu frasco exclusivo de 50ml com desconto do valor já pago pelas amostras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAMÍLIAS -->
+<section style="padding: 7rem 3rem;" id="familias">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="reveal" style="margin-bottom:3rem;">
+      <span class="section-tag">As famílias olfativas</span>
+      <h2 style="font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.2;">Quatro universos.<br>Infinitas nuances.</h2>
+    </div>
+    <div class="familias-grid">
+      <div class="familia-card familia-adocicado reveal">
+        <div class="familia-icon">◈</div>
+        <h3 style="font-family:var(--serif);font-size:1.6rem;font-weight:400;margin-bottom:.3rem;">Adocicado</h3>
+        <div class="familia-sub">Oriental Gourmand</div>
+        <p style="font-size:.88rem;color:var(--marrom-medio);line-height:1.8;">Sofisticação densa, conforto profundo e fixação excepcional. O abraço que fica na memória de quem passa por você.</p>
+        <div class="familia-essencias">
+          <span class="essencia-pill">Baunilha de Madagascar</span>
+          <span class="essencia-pill">Cumaru</span>
+          <span class="essencia-pill">Âmbar</span>
+        </div>
+      </div>
+      <div class="familia-card familia-madeira reveal">
+        <div class="familia-icon">◉</div>
+        <h3 style="font-family:var(--serif);font-size:1.6rem;font-weight:400;margin-bottom:.3rem;">Amadeirado</h3>
+        <div class="familia-sub">Madeiras Nobres</div>
+        <p style="font-size:.88rem;color:var(--marrom-medio);line-height:1.8;">Autoridade silenciosa, elegância discreta e maturidade. O aroma que comunica liderança sem precisar de palavras.</p>
+        <div class="familia-essencias">
+          <span class="essencia-pill">Sândalo</span>
+          <span class="essencia-pill">Cedro da Virgínia</span>
+          <span class="essencia-pill">Patchouli</span>
+        </div>
+      </div>
+      <div class="familia-card familia-citrico reveal">
+        <div class="familia-icon">◇</div>
+        <h3 style="font-family:var(--serif);font-size:1.6rem;font-weight:400;margin-bottom:.3rem;">Cítrico</h3>
+        <div class="familia-sub">Cítrico Aromático</div>
+        <p style="font-size:.88rem;color:var(--marrom-medio);line-height:1.8;">Frescor solar, energia e dinamismo. O perfume que entra em um ambiente antes de você — limpo, luminoso e inconfundível.</p>
+        <div class="familia-essencias">
+          <span class="essencia-pill">Bergamota Italiana</span>
+          <span class="essencia-pill">Néroli</span>
+          <span class="essencia-pill">Limão Siciliano</span>
+        </div>
+      </div>
+      <div class="familia-card familia-floral reveal">
+        <div class="familia-icon">✦</div>
+        <h3 style="font-family:var(--serif);font-size:1.6rem;font-weight:400;margin-bottom:.3rem;">Floral</h3>
+        <div class="familia-sub">Floral Abstrato Moderno</div>
+        <p style="font-size:.88rem;color:var(--marrom-medio);line-height:1.8;">Não o floral comum — o floral da alta costura. Íris e jasmin sambac com dimensão aveludada que transcende o tempo.</p>
+        <div class="familia-essencias">
+          <span class="essencia-pill">Íris</span>
+          <span class="essencia-pill">Jasmin Sambac</span>
+          <span class="essencia-pill">Rosa Turca</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEPARADOR NÚMEROS -->
+<section class="separador">
+  <div class="sep-item reveal">
+    <span class="sep-num">4</span>
+    <span class="sep-label">Famílias olfativas</span>
+  </div>
+  <div class="sep-divider"></div>
+  <div class="sep-item reveal">
+    <span class="sep-num">5</span>
+    <span class="sep-label">Óleos terapêuticos</span>
+  </div>
+  <div class="sep-divider"></div>
+  <div class="sep-item reveal">
+    <span class="sep-num">3</span>
+    <span class="sep-label">Amostras exclusivas</span>
+  </div>
+  <div class="sep-divider"></div>
+  <div class="sep-item reveal">
+    <span class="sep-num">1</span>
+    <span class="sep-label">Fórmula que é só sua</span>
+  </div>
+</section>
+
+<!-- QUESTIONÁRIO -->
+<section class="questionario-section" id="diagnostico">
+  <div class="q-inner">
+
+    <!-- FORMULÁRIO -->
+    <div id="tela-form">
+      <div class="q-header reveal">
+        <span class="section-tag">Diagnóstico olfativo</span>
+        <h2>Descubra a sua<br>assinatura única.</h2>
+        <p>Responda com honestidade. Não existe resposta certa — existe a sua.</p>
+      </div>
+
+      <div class="prg">
+        <div class="pd" id="p0"></div><div class="pd" id="p1"></div>
+        <div class="pd" id="p2"></div><div class="pd" id="p3"></div>
+        <div class="pd" id="p4"></div><div class="pd" id="p5"></div>
+        <div class="pd" id="p6"></div><div class="pd" id="p7"></div>
+        <div class="pd" id="p8"></div>
+      </div>
+
+      <div class="blk">
+        <span class="blk-tag">Identificação</span>
+        <h3>Antes de começar</h3>
+        <p class="sub">Seu nome aparecerá no seu perfil olfativo personalizado.</p>
+        <span class="sl">Seu nome</span>
+        <input type="text" id="nome" placeholder="Como gostaria de ser chamada?" oninput="pg()">
+        <div class="row2" style="margin-top:.75rem;">
+          <div>
+            <span class="sl">Faixa etária</span>
+            <select id="idade" onchange="pg()">
+              <option value="">Selecione</option>
+              <option value="18-24">18 a 24 anos</option>
+              <option value="25-34">25 a 34 anos</option>
+              <option value="35-44">35 a 44 anos</option>
+              <option value="45-54">45 a 54 anos</option>
+              <option value="55+">55 anos ou mais</option>
+            </select>
+          </div>
+          <div>
+            <span class="sl">Ocasião principal de uso</span>
+            <select id="ocasiao" onchange="pg()">
+              <option value="">Selecione</option>
+              <option value="trabalho">Trabalho / reuniões</option>
+              <option value="diario">Dia a dia versátil</option>
+              <option value="social">Encontros e eventos</option>
+              <option value="curinga">Curinga — todos os momentos</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="blk">
+        <span class="blk-tag">Bloco 1 · Identidade</span>
+        <h3>Se a sua vida fosse um cenário agora, qual seria?</h3>
+        <p class="sub">Escolha o que mais ressoa — não o elegante, mas o verdadeiro para você hoje.</p>
+        <div class="op" onclick="pick(this,'b1','adocicado')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Uma confeitaria parisiense</strong><span>Conforto, acolhimento, doçura da vida e presença marcante</span></div></div>
+        <div class="op" onclick="pick(this,'b1','madeira')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Uma cabana na serra</strong><span>Tons terrosos, silêncio, sofisticação discreta e autoridade natural</span></div></div>
+        <div class="op" onclick="pick(this,'b1','citrico')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Um hotel de luxo à beira-mar</strong><span>Leveza, frescor, dinamismo e sofisticação solar</span></div></div>
+        <div class="op" onclick="pick(this,'b1','floral')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Um jardim botânico secreto</strong><span>Sensibilidade, romance, criatividade e elegância clássica</span></div></div>
+      </div>
+
+      <div class="blk">
+        <span class="blk-tag">Bloco 1b · Mensagem</span>
+        <h3>O que você quer que o seu rastro comunique?</h3>
+        <p class="sub">Quando você entra num ambiente, o que quer que as pessoas sintam?</p>
+        <div class="op" onclick="pick(this,'b1b','poder')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Poder e respeito</strong><span>Liderança, maturidade e autoridade</span></div></div>
+        <div class="op" onclick="pick(this,'b1b','empatia')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Acessibilidade e empatia</strong><span>Acolhimento, calor humano e conforto</span></div></div>
+        <div class="op" onclick="pick(this,'b1b','energia')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Energia e criatividade</strong><span>Inovação, jovialidade e entusiasmo</span></div></div>
+        <div class="op" onclick="pick(this,'b1b','misterio')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Mistério e sedução</strong><span>Elegância enigmática e presença marcante</span></div></div>
+      </div>
+
+      <div class="blk">
+        <span class="blk-tag">Bloco 2 · Necessidade terapêutica</span>
+        <h3>Qual é a sua maior necessidade emocional agora?</h3>
+        <p class="sub">Escolha a principal. Você poderá indicar uma secundária logo abaixo.</p>
+        <div class="op" onclick="pick(this,'b2','lavanda')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Preciso desacelerar</strong><span>Muito estresse — quero paz, calma e alívio da ansiedade</span></div></div>
+        <div class="op" onclick="pick(this,'b2','alecrim')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Preciso de foco</strong><span>Mente dispersa — quero clareza mental e memória</span></div></div>
+        <div class="op" onclick="pick(this,'b2','hortela')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Preciso de energia</strong><span>Cansaço mental — quero vigor e disposição</span></div></div>
+        <div class="op" onclick="pick(this,'b2','laranja')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Preciso elevar o humor</strong><span>Dias pesados — quero leveza, alegria e criatividade</span></div></div>
+        <div class="op" onclick="pick(this,'b2','geranio')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Preciso de equilíbrio</strong><span>Busco estabilidade emocional e autoestima</span></div></div>
+        <span class="sl">Necessidade secundária (opcional)</span>
+        <select id="b2sec"><option value="">Nenhuma</option><option value="lavanda">Desacelerar (lavanda)</option><option value="alecrim">Foco (alecrim)</option><option value="hortela">Energia (hortelã-pimenta)</option><option value="laranja">Elevar o humor (laranja/bergamota)</option><option value="geranio">Equilíbrio (gerânio)</option></select>
+      </div>
+
+      <div class="blk">
+        <span class="blk-tag">Bloco 3 · Alertas olfativos e alergias</span>
+        <h3>Existe algum cheiro ou ingrediente que você não suporta?</h3>
+        <p class="sub">O que for marcado nunca entra na sua fórmula — nem como nota suave.</p>
+        <p style="font-size:.78rem;font-weight:400;color:var(--marrom-medio);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;">Famílias que não gosto:</p>
+        <div class="op" onclick="veto(this,'adocicado')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Cheiros muito doces</strong><span>Baunilha, caramelo — me causam enjoo</span></div></div>
+        <div class="op" onclick="veto(this,'madeira')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Cheiros amadeirados ou secos</strong><span>Sândalo, cedro — acho muito pesados</span></div></div>
+        <div class="op" onclick="veto(this,'floral')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Florais — qualquer intensidade</strong><span>Íris, jasmim — não gosto nem de floral suave</span></div></div>
+        <div class="op" onclick="veto(this,'citrico')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Cítricos ou azedos</strong><span>Bergamota, limão — lembram produto de limpeza</span></div></div>
+        <div class="op" onclick="veto(this,'nenhum')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Nenhuma restrição de família</strong><span>Estou aberta a qualquer caminho olfativo</span></div></div>
+        <p style="font-size:.78rem;font-weight:400;color:var(--marrom-medio);letter-spacing:.08em;text-transform:uppercase;margin:1rem 0 .5rem;">Alergias conhecidas (opcional):</p>
+        <div class="op" onclick="alergia(this,'baunilha')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Derivados de baunilha / cumarina</strong><span>Já tive reação a perfumes com notas adocicadas intensas</span></div></div>
+        <div class="op" onclick="alergia(this,'citrico-foto')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Óleos cítricos fotossensibilizantes</strong><span>Minha pele mancha ou irrita com cítricos ao sol</span></div></div>
+        <div class="op" onclick="alergia(this,'alcool')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Sensibilidade ao álcool cosmético</strong><span>Minha pele resseca ou irrita com produtos alcoólicos</span></div></div>
+        <div class="op" onclick="alergia(this,'nenhuma')"><div class="ck sq"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Sem alergias conhecidas</strong><span>Nunca tive reação a cosméticos ou perfumes</span></div></div>
+      </div>
+
+      <div class="blk">
+        <span class="blk-tag">Bloco 4 · Intensidade</span>
+        <h3>Como você quer usar esse perfume?</h3>
+        <p class="sub">Define a concentração e projeção da fórmula final.</p>
+        <div class="op" onclick="pick(this,'b4','discreta')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Névoa discreta</strong><span>Percebida só de perto — trabalho ou ambientes fechados</span></div></div>
+        <div class="op" onclick="pick(this,'b4','moderada')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Presença equilibrada</strong><span>Notável mas sem exagero — uso diário versátil</span></div></div>
+        <div class="op" onclick="pick(this,'b4','intensa')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Entrada marcante</strong><span>O cheiro entra na sala antes de mim — noites e eventos</span></div></div>
+      </div>
+
+      <div class="blk">
+        <span class="blk-tag">Bloco 5 · Comportamento da pele</span>
+        <h3>Como a sua pele se comporta com perfumes?</h3>
+        <p class="sub">Essencial para calibrar fixação e segurança da fórmula.</p>
+        <div class="op" onclick="pelefn(this,'seca')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>O cheiro some rápido</strong><span>Pele tende a ser seca — dura poucas horas</span></div></div>
+        <div class="op" onclick="pelefn(this,'oleosa')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>O cheiro dura bastante</strong><span>Pele com oleosidade natural — persiste bem</span></div></div>
+        <div class="op" onclick="pelefn(this,'normal')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Duração média e equilibrada</strong><span>Nem seca demais nem oleosa demais</span></div></div>
+        <div class="op" onclick="pelefn(this,'sensivel')"><div class="ck"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ot"><strong>Pele ultra sensível ou reativa</strong><span>Fico vermelha, coço ou tenho alergias com cosméticos</span></div></div>
+        <div class="avp" id="avp">Vamos formular com máxima pureza e ingredientes calmantes. Sua segurança é prioridade absoluta.</div>
+      </div>
+
+      <div class="blk">
+        <span class="blk-tag">Bloco 6 · Calibração do gosto</span>
+        <h3>Cite 1 ou 2 perfumes que você já amou</h3>
+        <p class="sub">Nome, descrição ou memória afetiva. Ajuda a calibrar seu gosto real além das respostas acima.</p>
+        <textarea id="ref" placeholder="Ex.: usava Egeo Dolce e amava. Também gostei de um perfume floral suave da minha mãe..."></textarea>
+        <span class="sl">Em qual família esse(s) perfume(s) se encaixam? (opcional)</span>
+        <select id="fam"><option value="">Não sei identificar</option><option value="fresco">Fresco / aquático</option><option value="floral">Floral</option><option value="amadeirado">Amadeirado / terroso</option><option value="gourmand">Gourmand / adocicado</option><option value="oriental">Oriental / especiado</option></select>
+      </div>
+
+      <div class="blk" style="border-left: 2px solid var(--amber);">
+        <span class="blk-tag" style="color:var(--amber);">Toque final · O nome da sua criação</span>
+        <h3>Como você quer chamar o seu perfume?</h3>
+        <p class="sub">Ele é exclusivo — feito só para você. Dê a ele um nome que carregue significado. Pode ser uma palavra, um lugar, uma lembrança, uma pessoa. Esse nome estará no seu frasco.</p>
+        <input type="text" id="nomePerfume" placeholder="Ex.: Margarida, Ventania, Alma Livre, Amanhecer..." oninput="pg()" maxlength="40">
+        <p style="font-size:.75rem;color:var(--marrom-medio);margin-top:.4rem;opacity:.7;">Máximo 40 caracteres · Aparecerá no rótulo do seu frasco</p>
+      </div>
+
+      <button class="btn-enviar" onclick="gerar()">Revelar minha criação olfativa</button>
+    </div>
+
+    <!-- TELA LOADING -->
+    <div id="tela-loading" style="display:none;text-align:center;padding:4rem 1rem;">
+      <div style="margin-bottom:2rem;">
+        <div id="loading-circulo" style="width:60px;height:60px;border-radius:50%;border:1px solid rgba(160,112,42,.2);border-top:2px solid var(--amber);animation:girar 1.2s linear infinite;margin:0 auto;"></div>
+      </div>
+      <p style="font-family:var(--serif);font-size:1.4rem;font-weight:300;margin-bottom:.5rem;">Calculando sua criação...</p>
+      <p style="font-size:.85rem;color:var(--marrom-medio);line-height:1.7;max-width:320px;margin:0 auto;">Nossa inteligência está cruzando seu perfil olfativo, sua necessidade terapêutica e sua identidade. Isso leva alguns segundos.</p>
+    </div>
+
+    <!-- TELA CLIENTE -->
+    <div class="tela-cliente" id="tela-cliente">
+      <div class="cli-hero" id="cli-hero">
+        <span class="cli-saudacao" id="cli-saudacao"></span>
+        <div class="cli-perfil-nome" id="cli-perfil-nome"></div>
+        <div style="font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;opacity:.5;margin:.3rem 0 .6rem;" id="cli-por">por</div>
+        <div style="font-family:var(--serif);font-size:1.1rem;font-weight:300;font-style:italic;opacity:.75;" id="cli-nome-perfume-display"></div>
+        <div class="cli-familia-tag" id="cli-familia-tag" style="margin-top:.75rem;"></div>
+      </div>
+      <div class="cli-card"><h4>Quem você é pelo olfato</h4><p id="cli-identidade"></p></div>
+      <div class="cli-card"><h4>O que sua fórmula carrega</h4><p id="cli-formula"></p><div class="cli-tags" id="cli-tags"></div></div>
+      <div class="cli-card"><h4>Sua intenção terapêutica</h4><p id="cli-terapia"></p></div>
+      <div class="cli-card"><h4>Como usar e sentir</h4><p id="cli-usar"></p></div>
+      <div class="cli-card" style="border-left:2px solid var(--amber);">
+        <h4>O nome da sua criação</h4>
+        <p id="cli-nome-perfume-card" style="font-family:var(--serif);font-size:1.6rem;font-weight:300;font-style:italic;line-height:1.4;"></p>
+        <p style="font-size:.82rem;color:var(--marrom-medio);margin-top:.75rem;line-height:1.7;">Este nome estará gravado no rótulo do seu frasco exclusivo. É a sua assinatura — criada por você, para você.</p>
+      </div>
+      <div class="cli-prox"><h4>O que acontece agora</h4><p id="cli-prox"></p></div>
+      <button class="btn-admin" onclick="verAdmin()">Acesso administradora — ficha técnica de produção</button>
+    </div>
+
+    <!-- TELA ADMIN -->
+    <div class="tela-admin" id="tela-admin">
+      <div class="adm-hdr"><h3 id="fnum">Ficha de produção</h3><p id="fdt"></p></div>
+      <div class="fs"><div class="fst">Dados do cliente</div><div id="fdados"></div></div>
+      <div class="fs"><div class="fst">Perfil olfativo</div><div id="fperfil"></div></div>
+      <div class="fs">
+        <div class="fst">Envase — retirar dos galões macerados</div>
+        <p style="font-size:.78rem;color:var(--marrom-medio);margin-bottom:.75rem;line-height:1.6">Galões com 0ml não entram — restrição olfativa aplicada.</p>
+        <div id="fgaloes"></div>
+        <div class="tot"><span>Total de bases</span><span id="ftot">—</span></div>
+        <div class="nvit" id="vit"></div>
+        <div class="nalv" id="alv">Alerta: pele ultra sensível. Apenas insumos grau máximo de pureza. Proibido: canela, cravo, cinamato de benzila.</div>
+        <div class="nalg" id="alg"></div>
+      </div>
+      <div class="fs"><div class="fst">Óleos essenciais — adicionar no envase final</div><div id="foleos"></div></div>
+      <div class="fs">
+        <div class="fst">Tabela de fórmulas — 3 variações</div>
+        <p style="font-size:.78rem;color:var(--marrom-medio);margin-bottom:1rem;line-height:1.6">Produza as 3 variações abaixo para o kit de amostras. A variação 1 é a fórmula principal; a 2 e a 3 são nuances para o cliente escolher.</p>
+        <div id="ftabela" style="overflow-x:auto;">
+          <table id="tabela-variacoes" style="width:100%;border-collapse:collapse;font-size:.8rem;"></table>
+        </div>
+      </div>
+      <div class="fs"><div class="fst">Passo a passo de produção</div><div id="fpassos"></div></div>
+      <div class="fs"><div class="fst">Glossário desta ficha</div><div id="gls"></div></div>
+      <button class="btn-voltar" onclick="voltarCliente()">Voltar para o perfil olfativo</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <span class="footer-logo">Crispian</span>
+      <p class="footer-desc">Laboratório de perfumaria personalizada. Alta perfumaria, aromaterapia clínica e visagismo olfativo em uma única criação exclusiva.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navegação</h4>
+      <ul>
+        <li>Conceito</li>
+        <li>Como funciona</li>
+        <li>Famílias olfativas</li>
+        <li>Diagnóstico</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li>Instagram</li>
+        <li>WhatsApp</li>
+        <li>E-mail</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Crispian — Criação Olfativa Personalizada. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+const E={nome:'',idade:'',ocasiao:'',b1:null,b1b:null,b2:null,vetos:[],alergias:[],b4:null,pele:null,nomePerfume:''};
+const GALOES={
+  adocicado:{nome:'Galão adocicado',essencia:'Baunilha de Madagascar / Cumaru',cor:'#A0702A',imp:'Abraço, cremosidade, fixação intensa'},
+  madeira:{nome:'Galão amadeirado',essencia:'Sândalo / Cedro da Virgínia',cor:'#444441',imp:'Autoridade, maturidade, elegância discreta'},
+  citrico:{nome:'Galão cítrico/fresco',essencia:'Bergamota Italiana / Néroli',cor:'#185FA5',imp:'Frescor solar, energia, dinamismo'},
+  floral:{nome:'Galão floral',essencia:'Íris / Jasmin Sambac',cor:'#993556',imp:'Romance, sofisticação aveludada'}
+};
+const ON={lavanda:'Lavanda',alecrim:'Alecrim',hortela:'Hortelã-pimenta',laranja:'Laranja doce/Bergamota',geranio:'Gerânio'};
+const OB={lavanda:'calma e alívio da ansiedade',alecrim:'foco e clareza mental',hortela:'energia e vigor',laranja:'alegria e leveza',geranio:'equilíbrio emocional'};
+const MC={adocicado:15,madeira:15,citrico:7,floral:10};
+const HERO_COR={adocicado:{bg:'#FDF4E3',c:'#5C3A0A'},madeira:{bg:'#F0EBE0',c:'#2C1F14'},citrico:{bg:'#EEF4F0',c:'#1A3828'},floral:{bg:'#F8EEF2',c:'#4B1528'}};
+const PNOMES={adocicado:{poder:'Âmbar Dourado',empatia:'Acolhimento Profundo',energia:'Doce Despertar',misterio:'Sedução Cremosa'},madeira:{poder:'Madeira Nobre',empatia:'Raiz e Alma',energia:'Floresta Viva',misterio:'Sombra Elegante'},citrico:{poder:'Solar e Firme',empatia:'Brisa Aberta',energia:'Luz Mediterrânea',misterio:'Névoa Cítrica'},floral:{poder:'Flor de Comando',empatia:'Jardim Interior',energia:'Pétala em Movimento',misterio:'Floral Secreto'}};
+const PFAM={adocicado:'Oriental Gourmand',madeira:'Amadeirado Nobre',citrico:'Cítrico Aromático',floral:'Floral Abstrato Moderno'};
+const IDENT={
+  adocicado:{poder:'carrega uma presença densa e sofisticada. Seu rastro comunica liderança sem dureza — é a autoridade que aquece, não que intimida. Perfumes gourmand escolhem pessoas que sabem que força e delicadeza não se excluem.',empatia:'é do tipo que transforma ambientes. Quem chega perto sente algo difícil de nomear — um conforto imediato, uma sensação de que tudo vai ficar bem. Seu aroma é a extensão natural desse dom.',energia:'recusa o ordinário. A criatividade que você carrega pede um aroma que surpreenda, que desperte, que deixe rastro onde passou.',misterio:'sabe o valor de não se revelar completamente. Seu aroma convida sem entregar — é uma pergunta elegante que fica no ar muito depois de você sair.'},
+  madeira:{poder:'tem a solidez de quem não precisa provar nada. Sândalo e cedro são os aromas do poder que não grita — e você intuitivamente soube disso.',empatia:'tem algo de ancestral no seu jeito de estar. Seu aroma vai comunicar raízes, pertencimento, chão firme — que as pessoas podem confiar em você.',energia:'é uma força tranquila em movimento. O amadeirado com toques frescos traduz essa dualidade: estrutura e dinamismo coexistindo no mesmo frasco.',misterio:'escolheu o caminho mais sofisticado. Madeiras densas e misteriosas têm sido o segredo dos grandes perfumistas há séculos.'},
+  citrico:{poder:'associou limpeza com poder — e isso é raro e certeiro. Bergamota italiana é a fragrância dos executivos de Milão e das manhãs de hotel cinco estrelas.',empatia:'tem uma generosidade natural. Cítricos criam abertura imediata — as pessoas se sentem bem-vindas antes mesmo de você dizer uma palavra.',energia:'e o cítrico são a mesma coisa: presença imediata, clareza, movimento. Não há hesitação nesse aroma — assim como em você.',misterio:'escolheu o mais difícil de executar. Uma névoa fresca que desaparece antes de você conseguir identificá-la — e é exatamente esse o mistério.'},
+  floral:{poder:'escolheu os florais da alta costura — íris e jasmin sambac comunicam que você conhece a diferença entre o ordinário e o extraordinário.',empatia:'tem um calor discreto que faz as pessoas se lembrarem de você da maneira mais suave e bonita possível.',energia:'está sempre em movimento — e florais abstratos modernos são dinâmicos: não são a flor parada, são a flor no vento.',misterio:'carrega algo de incerto e poético. Nos florais brancos você nunca sabe se é real ou memória — e é esse o mais belo dos mistérios.'}
+};
+const FORMULA={adocicado:'A base da sua criação é construída sobre notas de baunilha de Madagascar e cumaru — o "ouro negro" da perfumaria brasileira, valorizado nas mais importantes casas do mundo. Essa base cria uma assinatura densa, cremosa e de fixação excepcional.',madeira:'A espinha dorsal da sua criação é o sândalo nobre — uma das matérias-primas mais valorizadas na alta perfumaria mundial. Ele cria uma base calorosa, suave e de longa duração que sustenta e amplifica todas as outras notas.',citrico:'Sua fórmula é ancorada na bergamota italiana — a mesma essência que define o Chá Earl Grey e ingrediente secreto de alguns dos perfumes mais icônicos do século XX. Leve, solar e de presença imediata.',floral:'A alma da sua fórmula é a íris — um dos ingredientes mais nobres e caros da perfumaria fina. Não é um floral comum: tem uma dimensão aveludada, quase pó de arroz, que eleva qualquer composição a outro patamar.'};
+const TERAPIA={lavanda:'Sua fórmula carrega óleo essencial puro de lavanda — não como aroma apenas, mas como agente terapêutico ativo. A lavanda age diretamente no sistema nervoso, reduzindo cortisol e promovendo relaxamento real. Cada aplicação é também um ritual de autocuidado.',alecrim:'O alecrim puro da sua fórmula estimula a circulação cerebral e melhora a retenção de memória. Seu perfume não é apenas aroma — é um aliado nas horas que exigem o melhor de você.',hortela:'Hortelã-pimenta pura ativa o sistema nervoso em segundos. Seu perfume vai funcionar como um gatilho sensorial — quando precisar de energia real, um toque no pulso será suficiente.',laranja:'Laranja doce e bergamota puras têm efeito comprovado na redução de ansiedade situacional e elevação do humor. A ciência chama isso de psicoaromaterapia. Você chamará de seu perfume favorito.',geranio:'O gerânio puro é chamado de "óleo do equilíbrio" na aromaterapia clínica. Trabalha com a autoestima e a estabilidade emocional em momentos de transição. Sua fórmula foi pensada para te acompanhar exatamente onde você está agora.'};
+const USAR={discreta:'Aplique no pulso e na parte interna dos cotovelos — pontos onde o calor do corpo libera o aroma gradualmente. Para ambientes de trabalho ou reuniões, a maneira mais elegante de ter presença sem exagero.',moderada:'Aplique no pulso, pescoço e atrás das orelhas. Espere 30 segundos antes de se vestir. Você vai perceber três momentos ao longo do dia: a nota de topo nos primeiros minutos, a nota de coração após meia hora, e a nota de fundo depois de duas horas — o que fica e o que as pessoas lembram.',intensa:'Aplique no pescoço, pulso e — o truque das perfumistas francesas — uma leve névoa no cabelo. O calor dos fios amplifica o aroma de forma única. Para renovar à noite, uma segunda camada após 4 horas.'};
+
+function pick(el,b,v){document.querySelectorAll('[onclick*="pick(this,\''+b+'\'"]').forEach(o=>o.classList.remove('s'));el.classList.add('s');E[b]=v;pg();}
+function pelefn(el,v){document.querySelectorAll('[onclick*="pelefn"]').forEach(o=>o.classList.remove('s'));el.classList.add('s');E.pele=v;document.getElementById('avp').style.display=v==='sensivel'?'block':'none';pg();}
+function veto(el,v){
+  if(v==='nenhum'){document.querySelectorAll('[onclick*="veto(this"]').forEach(o=>o.classList.remove('sc'));E.vetos=[];el.classList.add('sc');E.vetos=['nenhum'];pg();return;}
+  document.querySelectorAll('[onclick*="\'nenhum\'"]').forEach(o=>o.classList.remove('sc'));E.vetos=E.vetos.filter(x=>x!=='nenhum');
+  el.classList.contains('sc')?(el.classList.remove('sc'),E.vetos=E.vetos.filter(x=>x!==v)):(el.classList.add('sc'),E.vetos.push(v));pg();
+}
+function alergia(el,v){
+  if(v==='nenhuma'){document.querySelectorAll('[onclick*="alergia(this"]').forEach(o=>o.classList.remove('sc'));E.alergias=[];el.classList.add('sc');E.alergias=['nenhuma'];pg();return;}
+  document.querySelectorAll('[onclick*="\'nenhuma\'"]').forEach(o=>o.classList.remove('sc'));E.alergias=E.alergias.filter(x=>x!=='nenhuma');
+  el.classList.contains('sc')?(el.classList.remove('sc'),E.alergias=E.alergias.filter(x=>x!==v)):(el.classList.add('sc'),E.alergias.push(v));pg();
+}
+function pg(){
+  E.nome=document.getElementById('nome').value.trim();
+  E.idade=document.getElementById('idade').value;
+  E.ocasiao=document.getElementById('ocasiao').value;
+  E.nomePerfume=document.getElementById('nomePerfume').value.trim();
+  const checks=[E.nome&&E.idade&&E.ocasiao,E.b1,E.b1b,E.b2,E.vetos.length>0&&E.alergias.length>0,E.b4,E.pele,true,E.nomePerfume];
+  checks.forEach((v,i)=>document.getElementById('p'+i).classList.toggle('done',!!v));
+}
+function calcGaloes(g,vetos,pele){
+  const B={adocicado:{adocicado:30,madeira:8,citrico:0,floral:7},madeira:{adocicado:0,madeira:30,citrico:8,floral:7},citrico:{adocicado:0,madeira:5,citrico:30,floral:8},floral:{adocicado:0,madeira:5,citrico:8,floral:30}};
+  let f={...B[g]};
+  vetos.filter(v=>v!=='nenhum').forEach(v=>{if(f[v]>0){const r=f[v];f[v]=0;const ks=Object.keys(f).filter(k=>k!==v&&f[k]>0&&!vetos.includes(k));if(ks.length){const a=Math.round(r/ks.length);ks.forEach(k=>f[k]+=a);}}});
+  let vml=50-Object.values(f).reduce((a,b)=>a+b,0)-3;if(pele==='seca')vml=Math.max(0,vml-4);
+  f._v=vml;f._fix=pele==='seca'?4:0;return f;
+}
+function row(l,v){return`<div class="fr"><span class="fl">${l}</span><span class="fv">${v}</span></div>`;}
+
+const GEMINI_KEY=''; // Insira aqui sua chave da API Gemini
+
+function mostrarLoading(){
+  document.getElementById('tela-form').style.display='none';
+  document.getElementById('tela-loading').style.display='block';
+  document.getElementById('tela-loading').scrollIntoView({behavior:'smooth'});
+}
+function esconderLoading(){
+  document.getElementById('tela-loading').style.display='none';
+}
+
+async function chamarGemini(prompt){
+  const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      contents:[{parts:[{text:prompt}]}],
+      generationConfig:{temperature:0.85,maxOutputTokens:1200}
+    })
+  });
+  if(!res.ok)throw new Error('Erro na API Gemini: '+res.status);
+  const data=await res.json();
+  return data.candidates[0].content.parts[0].text.trim();
+}
+
+async function gerar(){
+  E.nome=document.getElementById('nome').value.trim();
+  E.idade=document.getElementById('idade').value;
+  E.ocasiao=document.getElementById('ocasiao').value;
+  E.nomePerfume=document.getElementById('nomePerfume').value.trim();
+  if(!E.nome||!E.idade||!E.ocasiao||!E.b1||!E.b1b||!E.b2||!E.vetos.length||!E.alergias.length||!E.b4||!E.pele||!E.nomePerfume){
+    alert('Por favor, preencha todos os campos — incluindo o nome do seu perfume.');return;
+  }
+  mostrarLoading();
+  const fn=E.nome.split(' ')[0];
+  const sec=document.getElementById('b2sec').value;
+  const ref=document.getElementById('ref').value||'Não informado';
+  const ocMap={trabalho:'trabalho e reuniões',diario:'uso diário versátil',social:'encontros e eventos',curinga:'todos os momentos'};
+  const ocMapAdmin={trabalho:'Trabalho / reuniões',diario:'Dia a dia versátil',social:'Encontros e eventos',curinga:'Curinga — todos os momentos'};
+  const mensagemMap={poder:'poder e respeito — liderança, maturidade e autoridade',empatia:'acessibilidade e empatia — acolhimento e calor humano',energia:'energia e criatividade — inovação e entusiasmo',misterio:'mistério e sedução — elegância enigmática'};
+  const intensidadeMap={discreta:'discreta (Eau de Cologne)',moderada:'equilibrada (Eau de Toilette)',intensa:'marcante (Eau de Parfum)'};
+  const peleMap={seca:'seca',oleosa:'oleosa',normal:'normal',sensivel:'ultra sensível'};
+  const familiaNome={adocicado:'Oriental Gourmand (baunilha de Madagascar e cumaru)',madeira:'Amadeirado Nobre (sândalo e cedro da Virgínia)',citrico:'Cítrico Aromático (bergamota italiana e néroli)',floral:'Floral Abstrato Moderno (íris e jasmin sambac)'};
+  const oleoNome={lavanda:'lavanda (calma e alívio da ansiedade)',alecrim:'alecrim (foco e clareza mental)',hortela:'hortelã-pimenta (energia e vigor)',laranja:'laranja doce e bergamota (alegria e leveza)',geranio:'gerânio (equilíbrio emocional)'};
+
+  const prompt=`Você é a voz da Crispian, uma perfumaria artesanal brasileira de alto padrão que une alta perfumaria, aromaterapia clínica e visagismo olfativo. Seu tom é sofisticado, poético e acolhedor — como uma consultora de perfumaria renomada falando diretamente com a cliente. Nunca use jargões técnicos sem explicação. Escreva em português do Brasil, na segunda pessoa (você/sua).
+
+Com base no perfil olfativo abaixo, gere EXATAMENTE 4 textos separados por "---". Não coloque títulos, numeração ou qualquer outro texto além dos 4 blocos separados por "---".
+
+PERFIL DA CLIENTE:
+- Nome: ${fn}
+- Faixa etária: ${E.idade} anos
+- Ocasião de uso: ${ocMap[E.ocasiao]}
+- Família olfativa principal: ${familiaNome[E.b1]}
+- Mensagem que quer transmitir: ${mensagemMap[E.b1b]}
+- Necessidade terapêutica principal: ${oleoNome[E.b2]}
+${sec&&sec!==E.b2?'- Necessidade terapêutica secundária: '+oleoNome[sec]:''}
+- Intensidade desejada: ${intensidadeMap[E.b4]}
+- Tipo de pele: ${peleMap[E.pele]}
+- Perfumes de referência que amou: ${ref}
+- Nome que escolheu para seu perfume: "${E.nomePerfume}"
+
+GERE OS 4 TEXTOS:
+
+TEXTO 1 — "Quem você é pelo olfato" (3 a 4 linhas): Descreva a personalidade e essência desta cliente com base nas escolhas dela. Seja poético, específico e pessoal. Mencione o nome dela (${fn}).
+
+TEXTO 2 — "O que sua fórmula carrega" (3 a 4 linhas): Descreva com beleza e sofisticação as matérias-primas da família olfativa escolhida. Mencione origem, sensação e o que torna esses ingredientes especiais na alta perfumaria mundial.
+
+TEXTO 3 — "Sua intenção terapêutica" (3 a 4 linhas): Explique de forma poética e científica ao mesmo tempo como os óleos essenciais escolhidos vão agir no bem-estar desta cliente. Conecte com a necessidade emocional dela.
+
+TEXTO 4 — "Como usar e sentir" (3 a 4 linhas): Dê instruções elegantes de como aplicar o perfume para a ocasião de uso e intensidade escolhidas. Inclua dicas práticas como uma perfumista experiente passaria.
+
+Separe os 4 textos APENAS com "---" em uma linha isolada. Nenhum outro separador.`;
+
+  try {
+    const resposta=await chamarGemini(prompt);
+    const partes=resposta.split(/\n---\n|^---\n|---$/m).map(p=>p.trim()).filter(p=>p.length>10);
+
+    const hc=HERO_COR[E.b1];
+    const ch=document.getElementById('cli-hero');
+    ch.style.background=hc.bg;ch.style.color=hc.c;
+    document.getElementById('cli-saudacao').textContent=fn+', sua criação foi revelada';
+    document.getElementById('cli-perfil-nome').textContent=PNOMES[E.b1][E.b1b];
+    document.getElementById('cli-nome-perfume-display').textContent='"'+E.nomePerfume+'"';
+    document.getElementById('cli-nome-perfume-card').textContent='"'+E.nomePerfume+'"';
+    document.getElementById('cli-familia-tag').textContent=PFAM[E.b1];
+    document.getElementById('cli-identidade').textContent=partes[0]||fn+' '+IDENT[E.b1][E.b1b];
+    document.getElementById('cli-formula').textContent=partes[1]||FORMULA[E.b1];
+    const tags=[PFAM[E.b1],{discreta:'Névoa discreta',moderada:'Presença equilibrada',intensa:'Entrada marcante'}[E.b4],ON[E.b2]];
+    if(sec&&sec!==E.b2)tags.push(ON[sec]);
+    document.getElementById('cli-tags').innerHTML=tags.map(t=>`<span class="cli-tag">${t}</span>`).join('');
+    document.getElementById('cli-terapia').textContent=partes[2]||TERAPIA[E.b2];
+    document.getElementById('cli-usar').textContent=partes[3]||USAR[E.b4];
+    document.getElementById('cli-prox').textContent=fn+', sua ficha de perfil olfativo foi gerada. Em até 5 dias úteis você receberá 3 amostras personalizadas — pequenas variações da sua fórmula para escolher a que mais ressoa com você. Após sua escolha, seu frasco exclusivo de 50ml será preparado artesanalmente.';
+    esconderLoading();
+    document.getElementById('tela-cliente').style.display='block';
+    document.getElementById('tela-cliente').scrollIntoView({behavior:'smooth'});
+  } catch(err){
+    esconderLoading();
+    document.getElementById('tela-form').style.display='block';
+    alert('Houve um erro ao gerar seu perfil. Verifique sua conexão e tente novamente.\n\nDetalhe: '+err.message);
+    return;
+  }
+
+  const num='#'+String(Math.floor(Math.random()*900)+100).padStart(3,'0');
+  document.getElementById('fnum').textContent='Ficha de produção '+num;
+  document.getElementById('fdt').textContent=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  const algTxt=E.alergias.includes('nenhuma')?'Nenhuma':E.alergias.map(a=>({baunilha:'Baunilha/cumarina','citrico-foto':'Cítricos fotossensibilizantes',alcool:'Álcool cosmético'}[a]||a)).map(a=>`<span class="balrg">${a}</span>`).join('');
+  const vtxt=E.vetos.includes('nenhum')?'Nenhuma':E.vetos.map(v=>({madeira:'amadeirado',citrico:'cítrico',adocicado:'adocicado',floral:'floral'}[v])).map(v=>`<span class="bveto">${v}</span>`).join('');
+  document.getElementById('fdados').innerHTML=[['Nome',E.nome],['Faixa etária',E.idade+' anos'],['Ocasião',ocMapAdmin[E.ocasiao]||E.ocasiao],['Nome do perfume','"'+E.nomePerfume+'"'],['Alergias declaradas',algTxt]].map(([l,v])=>row(l,v)).join('');
+  document.getElementById('fperfil').innerHTML=[
+    ['Nome do perfume','"'+E.nomePerfume+'"'],
+    ['Galão principal',GALOES[E.b1].nome],
+    ['Mensagem',{poder:'Poder e respeito',empatia:'Acessibilidade e empatia',energia:'Energia e criatividade',misterio:'Mistério e sedução'}[E.b1b]],
+    ['Óleo principal',ON[E.b2]+' — '+OB[E.b2]],
+    ['Óleo secundário',sec&&sec!==E.b2?ON[sec]+' — '+OB[sec]:'Não selecionado'],
+    ['Restrições olfativas',vtxt],
+    ['Intensidade',{discreta:'Eau de Cologne',moderada:'Eau de Toilette',intensa:'Eau de Parfum'}[E.b4]],
+    ['Tipo de pele',{seca:'Seca — fixadores reforçados',oleosa:'Oleosa — padrão',normal:'Normal — equilibrada',sensivel:'Ultra sensível — protocolo seguro'}[E.pele]],
+    ['Referências',document.getElementById('ref').value||'Não informado'],
+    ['Família ref.',document.getElementById('fam').value||'Não identificada'],
+    ['Maceração',MC[E.b1]+' dias'],
+  ].map(([l,v])=>row(l,v)).join('');
+  const f=calcGaloes(E.b1,E.vetos,E.pele);
+  const totB=f.adocicado+f.madeira+f.citrico+f.floral;
+  document.getElementById('fgaloes').innerHTML=Object.entries(GALOES).map(([k,g])=>{
+    const ml=f[k]||0;const z=ml===0;
+    return`<div class="gc${z?' gc-zero':''}"><div><div class="gc-nome" style="color:${z?'#888':g.cor}">${g.nome}</div><div class="gc-ess">${g.essencia}</div><div class="gc-imp">${z?'vetado — não abrir':g.imp}</div></div><div class="gc-ml" style="color:${z?'#aaa':g.cor}">${ml}<span>ml</span></div></div>`;
+  }).join('');
+  document.getElementById('ftot').textContent=totB+' ml de galões';
+  document.getElementById('vit').innerHTML=`Completar com: ${f._v}ml álcool perfumístico 96% · 3ml Vitamina E oleosa (tocoferol cosmético)${f._fix>0?' · 4ml fixador musgo branco/ambroxan (pele seca)':''}`;
+  document.getElementById('alv').style.display=E.pele==='sensivel'?'block':'none';
+  const algAlertas=[];
+  if(E.alergias.includes('baunilha')&&E.b1==='adocicado')algAlertas.push('Cliente declarou alergia a baunilha/cumarina — galão adocicado é o principal. Avaliar com cliente antes de produzir.');
+  if(E.alergias.includes('citrico-foto')&&(f.citrico>0))algAlertas.push('Sensibilidade a cítricos fotossensibilizantes. Use bergamota bergapten-free ou substitua por néroli.');
+  if(E.alergias.includes('alcool'))algAlertas.push('Sensibilidade ao álcool cosmético. Considerar versão em óleo perfumado seco como alternativa.');
+  const algEl=document.getElementById('alg');
+  if(algAlertas.length){algEl.style.display='block';algEl.innerHTML='<strong>Alertas de alergia:</strong><br>'+algAlertas.join('<br>');}
+  else algEl.style.display='none';
+  document.getElementById('foleos').innerHTML=[row('Óleo principal',ON[E.b2]+' — 8 gotas'),row('Óleo secundário',sec&&sec!==E.b2?ON[sec]+' — 4 gotas':'Não selecionado'),row('Momento','Último passo — adicionar frescos antes de fechar'),row('Maceração final','2 a 3 dias para integração')].join('');
+
+  // Tabela 3 variações
+  function calcVar(g,vetos,pele,ajuste){
+    const B={adocicado:{adocicado:30,madeira:8,citrico:0,floral:7},madeira:{adocicado:0,madeira:30,citrico:8,floral:7},citrico:{adocicado:0,madeira:5,citrico:30,floral:8},floral:{adocicado:0,madeira:5,citrico:8,floral:30}};
+    let base={...B[g]};
+    vetos.filter(v=>v!=='nenhum').forEach(v=>{if(base[v]>0){const r=base[v];base[v]=0;const ks=Object.keys(base).filter(k=>k!==v&&base[k]>0&&!vetos.includes(k));if(ks.length){const a=Math.round(r/ks.length);ks.forEach(k=>base[k]+=a);}}});
+    // Ajuste da variação: leve toque na composição
+    if(ajuste==='v2'){const chaves=Object.keys(base).filter(k=>base[k]>0&&k!==g);if(chaves.length>0){const k=chaves[0];base[g]=Math.max(0,base[g]-3);base[k]+=3;}}
+    if(ajuste==='v3'){const chaves=Object.keys(base).filter(k=>base[k]>0&&k!==g);if(chaves.length>0){chaves.forEach(k=>{base[g]=Math.max(0,base[g]-1);base[k]+=1;});}}
+    let vml=50-Object.values(base).reduce((a,b)=>a+b,0)-3;
+    if(pele==='seca')vml=Math.max(0,vml-4);
+    base._v=vml; base._fix=pele==='seca'?4:0; base._vitE=3;
+    return base;
+  }
+  const v1=calcVar(E.b1,E.vetos,E.pele,'v1');
+  const v2=calcVar(E.b1,E.vetos,E.pele,'v2');
+  const v3=calcVar(E.b1,E.vetos,E.pele,'v3');
+  function ml5(v50){return v50===0?'—':(v50/10).toFixed(1)+'ml';}
+  function ml50(v50){return v50===0?'—':v50+'ml';}
+  const ingredientes=[
+    {label:'Base adocicada (baunilha/tonka)',k:'adocicado'},
+    {label:'Base amadeirada (sândalo/cedro)',k:'madeira'},
+    {label:'Base cítrica (bergamota/néroli)',k:'citrico'},
+    {label:'Base floral (íris/jasmin)',k:'floral'},
+    {label:'Vitamina E oleosa (tocoferol)',k:'_vitE'},
+    {label:'Fixador musgo branco/ambroxan',k:'_fix'},
+    {label:'Veículo neutro (álcool 96%)',k:'_v'},
+    {label:ON[E.b2]+' (principal)',k:'_oleo1'},
+    ...(sec&&sec!==E.b2?[{label:ON[sec]+' (acento)',k:'_oleo2'}]:[]),
+  ];
+  const oleo1_gotas=8; const oleo2_gotas=4;
+  function getVal(obj,k){
+    if(k==='_oleo1')return oleo1_gotas/20;
+    if(k==='_oleo2')return oleo2_gotas/20;
+    return obj[k]||0;
+  }
+  function getLabel(k,v){
+    if(k==='_oleo1')return oleo1_gotas+' gotas';
+    if(k==='_oleo2')return oleo2_gotas+' gotas';
+    return v;
+  }
+  const thead=`<thead><tr>
+    <th style="min-width:180px">Ingrediente</th>
+    <th class="var-header" colspan="2">Variação 1</th>
+    <th class="var-header" style="background:#7A5820;" colspan="2">Variação 2</th>
+    <th class="var-header" style="background:#5C3D2A;" colspan="2">Variação 3</th>
+  </tr><tr>
+    <th></th>
+    <th class="var-header" style="font-size:.65rem;">5ml</th><th class="var-header" style="font-size:.65rem;">50ml</th>
+    <th class="var-header" style="background:#7A5820;font-size:.65rem;">5ml</th><th class="var-header" style="background:#7A5820;font-size:.65rem;">50ml</th>
+    <th class="var-header" style="background:#5C3D2A;font-size:.65rem;">5ml</th><th class="var-header" style="background:#5C3D2A;font-size:.65rem;">50ml</th>
+  </tr></thead>`;
+  const tbody='<tbody>'+ingredientes.map(ing=>{
+    const val1=getVal(v1,ing.k),val2=getVal(v2,ing.k),val3=getVal(v3,ing.k);
+    if(val1===0&&val2===0&&val3===0)return'';
+    const isOleo=ing.k==='_oleo1'||ing.k==='_oleo2';
+    return`<tr>
+      <td class="ingrediente">${ing.label}</td>
+      <td class="center">${isOleo?oleo1_gotas+(ing.k==='_oleo2'?' gt':' gt'):ml5(val1)}</td><td class="center">${isOleo?(ing.k==='_oleo1'?oleo1_gotas:oleo2_gotas)+' gotas':ml50(val1)}</td>
+      <td class="center">${isOleo?oleo1_gotas+(ing.k==='_oleo2'?' gt':' gt'):ml5(val2)}</td><td class="center">${isOleo?(ing.k==='_oleo1'?oleo1_gotas:oleo2_gotas)+' gotas':ml50(val2)}</td>
+      <td class="center">${isOleo?oleo1_gotas+(ing.k==='_oleo2'?' gt':' gt'):ml5(val3)}</td><td class="center">${isOleo?(ing.k==='_oleo1'?oleo1_gotas:oleo2_gotas)+' gotas':ml50(val3)}</td>
+    </tr>`;
+  }).join('')+
+  `<tr>
+    <td class="total">Total frasco</td>
+    <td class="center total">5ml</td><td class="center total">50ml</td>
+    <td class="center total">5ml</td><td class="center total">50ml</td>
+    <td class="center total">5ml</td><td class="center total">50ml</td>
+  </tr></tbody>`;
+  document.getElementById('tabela-variacoes').className='variacoes';
+  document.getElementById('tabela-variacoes').innerHTML=thead+tbody;
+  const ps=[
+    {t:'Verifique os alertas',d:algAlertas.length?'Atenção: alergias declaradas nesta ficha. Leia os alertas acima antes de prosseguir.':'Sem alertas de alergia — pode prosseguir.'},
+    {t:'Separe os materiais',d:'Frasco âmbar 50ml, pipeta 5ml, luvas, rótulo com número '+num+'.'},
+    {t:'Retire dos galões macerados',d:'Adocicado: '+f.adocicado+'ml · Amadeirado: '+f.madeira+'ml · Cítrico: '+f.citrico+'ml · Floral: '+f.floral+'ml.'},
+    {t:'Adicione a Vitamina E (3ml)',d:'Tocoferol cosmético — antes do álcool. Protege os óleos essenciais da oxidação.'},
+    f._fix>0?{t:'Adicione o fixador (4ml)',d:'Musgo branco ou ambroxan. Âncora o perfume em pele seca.'}:null,
+    {t:'Complete com álcool ('+f._v+'ml)',d:'Álcool perfumístico 96%. Nunca álcool de farmácia. Despeje em fio fino.'},
+    {t:'Adicione os óleos essenciais — último passo',d:ON[E.b2]+' (8 gotas)'+(sec&&sec!==E.b2?', '+ON[sec]+' (4 gotas)':'')+(E.pele==='sensivel'?' — somente óleos certificados para pele sensível.':'.')},
+    {t:'Feche e homogeneize',d:'20 a 30 rotações lentas. Não agite com força.'},
+    {t:'Etiquete imediatamente',d:'Número '+num+', data, ingredientes, validade: 12-18 meses.'},
+    {t:'Maceração final — 2 a 3 dias',d:'Local escuro e fresco. As bases já estão prontas — este repouso integra os óleos essenciais.'},
+    {t:'Teste e envio das 3 amostras',d:'Pulso: 10 min (nota de topo) · 30 min (coração) · 2h (fundo). Registre antes de enviar.'},
+  ].filter(Boolean);
+  document.getElementById('fpassos').innerHTML=ps.map((p,i)=>`<div class="ps"><div class="pn">${i+1}</div><div><div class="pt2">${p.t}</div><div class="pd2">${p.d}</div></div></div>`).join('');
+  document.getElementById('gls').innerHTML=[
+    ['Galão macerado','Frasco 1L âmbar com tampa batoque. Contém base neutra + essência concentrada em repouso. O batoque impede evaporação do álcool.'],
+    ['Batoque','Vedação plástica interna da tampa. Essencial para maceração longa sem perda de concentração.'],
+    ['Vitamina E oleosa (tocoferol cosmético)','Antioxidante natural. Protege os óleos essenciais. Grau cosmético — não usar cápsula alimentar.'],
+    ['Óleos essenciais','Ingredientes terapêuticos puros. Entram apenas no frasco final, frescos. Nunca nos galões de estoque.'],
+    ['Bergapten-free','Bergamota sem o componente fotossensibilizante. Indicada para uso diário com exposição solar.'],
+    ['Maceração','Repouso após mistura. Galões: '+MC[E.b1]+' dias. Frasco do cliente: 2 a 3 dias.'],
+  ].map(([t,d])=>`<div class="gi"><strong>${t}:</strong> ${d}</div>`).join('');
+}
+function verAdmin(){document.getElementById('tela-cliente').style.display='none';document.getElementById('tela-admin').style.display='block';document.getElementById('tela-admin').scrollIntoView({behavior:'smooth'});}
+function voltarCliente(){document.getElementById('tela-admin').style.display='none';document.getElementById('tela-cliente').style.display='block';document.getElementById('tela-cliente').scrollIntoView({behavior:'smooth'});}
+
+// Reveal on scroll
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
