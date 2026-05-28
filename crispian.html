@@ -1188,7 +1188,7 @@ function calcGaloes(g,vetos,pele){
 }
 function row(l,v){return`<div class="fr"><span class="fl">${l}</span><span class="fv">${v}</span></div>`;}
 
-const GEMINI_KEY='AIzaSyDTFrQV9jOtrV-8HG-_T211U88se1Rf0pI';
+const GEMINI_KEY='';
 
 function mostrarLoading(){
   document.getElementById('tela-form').style.display='none';
@@ -1200,17 +1200,18 @@ function esconderLoading(){
 }
 
 async function chamarGemini(prompt){
-  const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
+  const res=await fetch('/api/claude',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      contents:[{parts:[{text:prompt}]}],
-      generationConfig:{temperature:0.85,maxOutputTokens:1200}
+      model:'claude-haiku-4-5-20251001',
+      max_tokens:1200,
+      messages:[{role:'user',content:prompt}]
     })
   });
-  if(!res.ok)throw new Error('Erro na API Gemini: '+res.status);
+  if(!res.ok){const err=await res.json();throw new Error('Erro na API Claude: '+res.status);}
   const data=await res.json();
-  return data.candidates[0].content.parts[0].text.trim();
+  return data.content[0].text.trim();
 }
 
 async function gerar(){
