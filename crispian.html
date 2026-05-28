@@ -928,9 +928,19 @@ footer {
       <div class="blk">
         <span class="blk-tag">Identificação</span>
         <h3>Antes de começar</h3>
-        <p class="sub">Seu nome aparecerá no seu perfil olfativo personalizado.</p>
+        <p class="sub">Seu nome aparecerá no seu perfil olfativo personalizado. Seu e-mail e WhatsApp serão usados apenas para envio do perfil e instruções do kit.</p>
         <span class="sl">Seu nome</span>
         <input type="text" id="nome" placeholder="Como gostaria de ser chamada?" oninput="pg()">
+        <div class="row2" style="margin-top:.75rem;">
+          <div>
+            <span class="sl">Seu e-mail</span>
+            <input type="email" id="email_cliente" placeholder="seu@email.com" oninput="pg()">
+          </div>
+          <div>
+            <span class="sl">Seu WhatsApp</span>
+            <input type="tel" id="whatsapp_cliente" placeholder="(00) 00000-0000" oninput="pg()">
+          </div>
+        </div>
         <div class="row2" style="margin-top:.75rem;">
           <div>
             <span class="sl">Faixa etária</span>
@@ -1286,9 +1296,11 @@ async function gerar(){
   E.nome=document.getElementById('nome').value.trim();
   E.idade=document.getElementById('idade').value;
   E.ocasiao=document.getElementById('ocasiao').value;
+  E.email_cliente=document.getElementById('email_cliente').value.trim();
+  E.whatsapp=document.getElementById('whatsapp_cliente').value.trim();
   E.nomePerfume=document.getElementById('nomePerfume').value.trim();
-  if(!E.nome||!E.idade||!E.ocasiao||!E.b1||!E.b1b||!E.b2||!E.vetos.length||!E.alergias.length||!E.b4||!E.pele||!E.nomePerfume){
-    alert('Por favor, preencha todos os campos — incluindo o nome do seu perfume.');return;
+  if(!E.nome||!E.email_cliente||!E.idade||!E.ocasiao||!E.b1||!E.b1b||!E.b2||!E.vetos.length||!E.alergias.length||!E.b4||!E.pele||!E.nomePerfume){
+    alert('Por favor, preencha todos os campos — incluindo nome, e-mail e o nome do seu perfume.');return;
   }
   mostrarLoading();
   const fn=E.nome.split(' ')[0];
@@ -1600,7 +1612,9 @@ async function enviarEmailAdmin(){
       custo_embalagem:'R$ — (frasco + rótulo + caixa)',
       margem_sugerida:'R$ 60,00 (kit amostras)',
       name:'Crispian Parfum',
-      email:'atendimento@crispianparfum.com.br'
+      email:E.email_cliente||'atendimento@crispianparfum.com.br',
+      email_cliente:E.email_cliente||'Nao informado',
+      whatsapp_cliente:E.whatsapp||'Nao informado',
     };
     await emailjs.send('service_es09yqa','gwpn6ve',params,'ApO31SOiNuaPfSWs2');
     console.log('E-mail enviado com sucesso');
